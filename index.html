@@ -31,6 +31,31 @@
   --muted: #ffffff;
   --red: #df4f4f;
   --green: #4ec98a;
+  
+  /* --- GLOBAL READABILITY FIX FOR SMALL TEXT --- */
+.tag, 
+.footnote, 
+.alloc-lbl, 
+.proj-lbl, 
+.metric-lbl, 
+.vlbl, 
+.vskey, 
+.bar-name, 
+.t-bar, 
+.t-row.hdr,
+.ans-eyebrow,
+.intro-eyebrow,
+.intro-sub {
+  font-family: 'DM Sans', sans-serif !important;
+  font-size: 0.68rem !important;  /* Bumps up the minimum size */
+  font-weight: 500;
+  letter-spacing: 0.1em !important; /* Tightens the massive spacing */
+}
+
+/* Specifically make the footnote a bit darker so it doesn't vanish */
+.slide-text .footnote {
+  color: var(--body);
+}
 
   /* Component specific (previously hardcoded) */
   --cinematic-bg: rgba(0, 0, 0, 0.85);
@@ -593,7 +618,7 @@ body, html {
   bottom: 1.8rem; /* Moved to bottom */
   right: 2.2rem; 
   z-index: 500;
-  font-family: 'JetBrains Mono', monospace; font-size: 0.6rem;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
   letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
   background: transparent; border: 1px solid var(--card-border);
   padding: 0.4rem 0.9rem; border-radius: 2px; cursor: pointer;
