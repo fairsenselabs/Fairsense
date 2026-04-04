@@ -1,0 +1,718 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>FairSense Sovereign Lab · Biological Truth Infrastructure | Investor Memorandum 2026</title>
+  <style>
+    /* ----- RESET & BASE (strictly preserved layout) ----- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Updated color palette: blue/gold replaced by sovereign blue */
+    :root {
+      --ws-gold: #2F6BFF;
+      --ws-gold-light: #EAF1FF;
+      --ws-gold-mid: #7EA6FF;
+      --ws-ink: #0F172A;
+      --ws-muted: #475569;
+      --ws-surface: #F8FAFC;
+      --ws-border: #E2E8F0;
+      --ws-card: #FFFFFF;
+      --border-radius-lg: 16px;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: #ffffff;
+      color: var(--ws-ink);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .plan {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    /* ----- TYPOGRAPHY (professional, corporate) ----- */
+    .cover-eyebrow {
+      font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      color: var(--ws-gold);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .cover-title {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 42px;
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 0.75rem;
+      color: var(--ws-ink);
+      letter-spacing: -0.02em;
+    }
+
+    .cover-title span {
+      color: var(--ws-gold);
+    }
+
+    .cover-sub {
+      font-size: 15px;
+      color: var(--ws-muted);
+      max-width: 560px;
+      line-height: 1.65;
+      margin-bottom: 1.5rem;
+      font-weight: 400;
+    }
+
+    .cover-meta {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .cover-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .cover-stat .label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ws-muted);
+    }
+
+    .cover-stat .val {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--ws-ink);
+    }
+
+    .cover-stat .val span {
+      font-size: 12px;
+      color: var(--ws-muted);
+      font-weight: 400;
+    }
+
+    .section {
+      margin-bottom: 3rem;
+    }
+
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ws-gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+      color: var(--ws-ink);
+      letter-spacing: -0.01em;
+    }
+
+    .callout {
+      background: var(--ws-gold-light);
+      border-left: 3px solid var(--ws-gold);
+      border-radius: 0;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .callout p {
+      font-size: 14px;
+      color: #1E2A5E;
+      line-height: 1.65;
+      font-weight: 450;
+    }
+
+    /* phase grid */
+    .phase-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .phase-card {
+      background: var(--ws-card);
+      border: 0.5px solid var(--ws-border);
+      border-radius: var(--border-radius-lg);
+      padding: 1.25rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .phase-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+    }
+
+    .phase-card.p1::before { background: var(--ws-gold-mid); }
+    .phase-card.p2::before { background: #1D9E75; }
+    .phase-card.p3::before { background: #378ADD; }
+
+    .phase-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ws-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .phase-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--ws-ink);
+    }
+
+    .phase-range {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--ws-gold);
+      margin-bottom: 0.75rem;
+    }
+
+    .phase-body {
+      font-size: 13px;
+      color: var(--ws-muted);
+      line-height: 1.6;
+    }
+
+    .phase-target {
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 0.5px solid var(--ws-border);
+      font-size: 12px;
+      color: var(--ws-muted);
+    }
+
+    .phase-target strong {
+      color: var(--ws-ink);
+      font-weight: 600;
+    }
+
+    /* metric cards grid */
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .metric-card {
+      background: var(--ws-card);
+      border: 0.5px solid var(--ws-border);
+      border-radius: var(--border-radius-lg);
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .metric-number {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--ws-gold);
+      font-family: 'Inter', sans-serif;
+      letter-spacing: -0.01em;
+    }
+
+    .metric-label {
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      text-transform: uppercase;
+      color: var(--ws-muted);
+      margin-top: 0.25rem;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin-bottom: 1.5rem;
+      border-radius: var(--border-radius-lg);
+    }
+
+    .client-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      min-width: 500px;
+    }
+
+    .client-table th {
+      text-align: left;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ws-muted);
+      padding: 0.5rem 0.75rem;
+      border-bottom: 0.5px solid var(--ws-border);
+    }
+
+    .client-table td {
+      padding: 0.75rem;
+      border-bottom: 0.5px solid var(--ws-border);
+      color: var(--ws-muted);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+
+    .client-table td:first-child {
+      color: var(--ws-ink);
+      font-weight: 500;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .price-card {
+      background: var(--ws-card);
+      border: 0.5px solid var(--ws-border);
+      border-radius: var(--border-radius-lg);
+      padding: 1.25rem;
+    }
+
+    .price-card.featured {
+      border: 2px solid var(--ws-gold);
+    }
+
+    .price-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ws-ink);
+      margin-bottom: 0.25rem;
+    }
+
+    .price-amount {
+      font-family: 'Inter', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--ws-gold);
+      margin-bottom: 0.25rem;
+      letter-spacing: -0.01em;
+    }
+
+    .price-unit {
+      font-size: 12px;
+      color: var(--ws-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .price-desc {
+      font-size: 12px;
+      color: var(--ws-muted);
+      line-height: 1.6;
+    }
+
+    .moat-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1px;
+      background: var(--ws-border);
+      border: 0.5px solid var(--ws-border);
+      border-radius: var(--border-radius-lg);
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+
+    .moat-cell-head {
+      background: var(--ws-surface);
+      padding: 0.75rem 1.25rem;
+    }
+
+    .moat-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ws-muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .moat-val {
+      font-size: 13px;
+      color: var(--ws-ink);
+      font-weight: 600;
+    }
+
+    .moat-note {
+      font-size: 12px;
+      color: var(--ws-muted);
+      line-height: 1.5;
+      margin-top: 0.25rem;
+    }
+
+    .competitor-row {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 0;
+      border-bottom: 0.5px solid var(--ws-border);
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .competitor-row:last-child {
+      border-bottom: none;
+    }
+
+    .comp-name {
+      font-size: 13px;
+      font-weight: 600;
+      min-width: 110px;
+      color: var(--ws-ink);
+    }
+
+    .comp-lane {
+      font-size: 12px;
+      color: var(--ws-muted);
+      flex: 1;
+      min-width: 180px;
+    }
+
+    .comp-gap {
+      font-size: 12px;
+      font-style: italic;
+      color: var(--ws-muted);
+    }
+
+    .gap-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--ws-gold);
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+
+    .risk-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .risk-card {
+      background: var(--ws-card);
+      border: 0.5px solid var(--ws-border);
+      border-radius: var(--border-radius-lg);
+      padding: 1rem 1.25rem;
+    }
+
+    .risk-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ws-ink);
+      margin-bottom: 0.4rem;
+    }
+
+    .risk-body {
+      font-size: 12px;
+      color: var(--ws-muted);
+      line-height: 1.6;
+    }
+
+    .divider {
+      border: none;
+      border-top: 0.5px solid var(--ws-border);
+      margin: 2rem 0;
+    }
+
+    .prose {
+      font-size: 14px;
+      color: var(--ws-muted);
+      line-height: 1.75;
+      margin-bottom: 1rem;
+    }
+
+    .prose strong {
+      color: var(--ws-ink);
+      font-weight: 600;
+    }
+
+    .footer-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1.5rem;
+      border-top: 0.5px solid var(--ws-border);
+      margin-top: 2rem;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .footer-bar span {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--ws-muted);
+      letter-spacing: 0.08em;
+    }
+
+    @media (max-width: 860px) {
+      .plan { padding: 1.75rem 1.25rem 3rem; }
+      .cover-title { font-size: 36px; }
+    }
+    @media (max-width: 780px) {
+      .phase-grid { grid-template-columns: repeat(2, 1fr); }
+      .moat-row { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 680px) {
+      .competitor-row { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+    }
+    @media (max-width: 600px) {
+      .phase-grid, .pricing-grid, .moat-row, .risk-grid { grid-template-columns: 1fr; }
+      .cover-title { font-size: 30px; }
+      .section-title { font-size: 20px; }
+      .metric-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .plan { padding: 1.25rem 1rem 2.5rem; }
+      .cover-title { font-size: 28px; }
+      .metric-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="plan">
+
+  <div class="cover">
+    <div class="cover-eyebrow">Confidential · Investor Memorandum · February 2026</div>
+    <div class="cover-title">FairSense<br><span>Sovereign Biological</span><br>Truth Infrastructure</div>
+    <div class="cover-sub">Building the biological census of Southeast Asia. One micro‑tremor at a time — the world's only mathematically verifiable defense against AI‑driven fraud.</div>
+    <div class="cover-meta">
+      <div class="cover-stat"><div class="label">Window</div><div class="val">18–24 <span>months to moat</span></div></div>
+      <div class="cover-stat"><div class="label">Primary market</div><div class="val">ASEAN <span>iGaming → BFSI → Gov</span></div></div>
+      <div class="cover-stat"><div class="label">Core asset</div><div class="val">Biological <span>Ground Truth Vault</span></div></div>
+      <div class="cover-stat"><div class="label">Funding ask</div><div class="val">$2.55M <span>24‑month runway</span></div></div>
+    </div>
+  </div>
+
+  <!-- 01 · The Proof — Production Status -->
+  <div class="section">
+    <div class="section-label">01 · Production Status</div>
+    <div class="section-title">Live, revenue‑generating, battle‑hardened</div>
+    <div class="callout">
+      <p>In Q4 2025 alone, FairSense neutralized 7,200+ bot sessions across 30+ ASEAN operators, saving an estimated $4.2M in direct losses. False positive rate &lt;0.01% — the industry's most accurate biological adjudicator.</p>
+    </div>
+    <div class="metric-grid">
+      <div class="metric-card"><div class="metric-number">30+</div><div class="metric-label">Active deployments</div></div>
+      <div class="metric-card"><div class="metric-number">7,200+</div><div class="metric-label">Bot sessions blocked (Q4'25)</div></div>
+      <div class="metric-card"><div class="metric-number">$4.2M</div><div class="metric-label">Client savings (Q4'25)</div></div>
+      <div class="metric-card"><div class="metric-number">&lt;0.01%</div><div class="metric-label">False positive rate</div></div>
+    </div>
+    <p class="prose"><strong>Data Sanctification Wall:</strong> All grey‑market training data passes through a one‑way wall — scrubs origin metadata, leaves only mathematically anonymized human entropy. Zero PII enters the core Vault. Court‑admissible SHA‑256 evidence.</p>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 02 · Institutional Audit Validation -->
+  <div class="section">
+    <div class="section-label">02 · Institutional Audit</div>
+    <div class="section-title">Independently verified · Institutional grade (9.5/10)</div>
+    <div class="table-wrapper">
+      <table class="client-table">
+        <thead><tr><th>Audit Finding</th><th>Status</th><th>Detail</th></tr></thead>
+        <tbody>
+          <tr><td>IAM Security</td><td>HARDENED</td><td>Zero credential exposure; encrypted environment‑variable injection</td></tr>
+          <tr><td>Adversarial Mimicry</td><td>HARDENED</td><td>Multi‑Pillar Correlation Filter → detection 66% → 99.99%</td></tr>
+          <tr><td>Regulatory Alignment</td><td>VALIDATED</td><td>Output reframed as “Adjudicator Narrative” — PDPA/GDPR audit scheduled</td></tr>
+          <tr><td>Mathematical Integrity</td><td>OPTIMIZED</td><td>Tri‑Vault Normalization Layer — auditor transparency, no raw biometrics</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="prose"><strong>Auditor conclusion:</strong> “The core math is textbook‑accurate. Operational footprint secured against credential/logic bypass. Data architecture completely mitigates biometric PII liability.”</p>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 03 · The Narrative: UNC3886 Kill Chain -->
+  <div class="section">
+    <div class="section-label">03 · The 60‑Second Kill</div>
+    <div class="section-title">We don’t stop the zero‑day. We stop lateral movement.</div>
+    <div class="callout">
+      <p>UNC3886 breached Singapore telcos via router zero‑days — stayed hidden 11 months. Legacy IAM saw “valid keys.” FairSense Bionium detected the scripted, mathematically perfect pivot. Session terminated in under 60 seconds. Zero exfiltration.</p>
+    </div>
+    <div class="phase-grid" style="margin-bottom:0.5rem">
+      <div class="phase-card" style="border-left:3px solid var(--ws-gold);"><div class="phase-num">0‑2 sec</div><div class="phase-title">APT automated pivot</div><div class="phase-body">Perfect stolen admin credential — 100% legal to IAM firewall.</div></div>
+      <div class="phase-card" style="border-left:3px solid var(--ws-gold);"><div class="phase-num">2‑5 sec</div><div class="phase-title">Bionium listens</div><div class="phase-body">Identifies mathematically perfect rhythm → non‑biological / scripted.</div></div>
+      <div class="phase-card" style="border-left:3px solid var(--ws-gold);"><div class="phase-num">5‑20 sec</div><div class="phase-title">Termination</div><div class="phase-body">Session killed, credentials purged, origin node blacklisted.</div></div>
+    </div>
+    <p class="prose"><strong>Result:</strong> Dwell time reduced from 11 months → &lt;60 seconds. Billions in risk eliminated. No forensic investigation cost.</p>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 04 · Infrastructure: Triple‑Tower Blackwell Engine -->
+  <div class="section">
+    <div class="section-label">04 · The Uncopyable Moat</div>
+    <div class="section-title">Triple‑Tower Blackwell + 245TB NVMe Vault</div>
+    <div class="phase-grid">
+      <div class="phase-card"><div class="phase-title">Tower A — The Guard</div><div class="phase-range">4x RTX 6000 Blackwell (384GB VRAM)</div><div class="phase-body">Real‑time 1,000Hz biological telemetry for whales: casinos, banks, trading floors.</div></div>
+      <div class="phase-card"><div class="phase-title">Tower B — LLM Factory</div><div class="phase-range">3x RTX 6000 (288GB VRAM)</div><div class="phase-body">Fine‑tuning, model distillation, Sovereign Studio projects (legal, medical, M&A).</div></div>
+      <div class="phase-card"><div class="phase-title">Tower C — Data Vault</div><div class="phase-range">245TB NVMe Gen5 Fabric</div><div class="phase-body">Evidence locker — ingesting anonymized biological ground truth. The true moat.</div></div>
+    </div>
+    <p class="prose"><strong>Edge vs. API:</strong> EVO‑X2 on‑prem (1,000Hz kernel‑level) for VIPs; Software SDK (60‑240Hz interpolation, 99.4% correlation) for enterprises; API Gateway for high‑volume fraud scoring.</p>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 05 · Biological Ground Truth Data Vault -->
+  <div class="section">
+    <div class="section-label">05 · The Crown Jewel Asset</div>
+    <div class="section-title">Neural DNA at scale — unacquirable data moat</div>
+    <div class="metric-grid">
+      <div class="metric-card"><div class="metric-number">100M+</div><div class="metric-label">Neural signatures by Year 2</div></div>
+      <div class="metric-card"><div class="metric-number">$50M+</div><div class="metric-label">Replacement cost (3+ years)</div></div>
+      <div class="metric-card"><div class="metric-number">$2.50</div><div class="metric-label">Per‑signature implied value</div></div>
+      <div class="metric-card"><div class="metric-number">$250M</div><div class="metric-label">Projected Vault valuation (Year 2)</div></div>
+    </div>
+    <p class="prose">SHA‑256 hashes of entropy — zero PII, fully PDPA/GDPR‑compliant. A competitor can buy the same GPUs tomorrow, but they cannot travel back to capture 50M+ neural signatures. The Vault is the moat.</p>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 06 · Revenue Streams -->
+  <div class="section">
+    <div class="section-label">06 · Revenue Streams</div>
+    <div class="section-title">The profitable war chest</div>
+    <div class="pricing-grid">
+      <div class="price-card"><div class="price-name">CasinoSense</div><div class="price-amount">$15k</div><div class="price-unit">/node/year</div><div class="price-desc">Stop $100M+ annual bot bleed in iGaming. Live blocking, forensic reports.</div></div>
+      <div class="price-card"><div class="price-name">Bionium (BFSI)</div><div class="price-amount">$500</div><div class="price-unit">/seat/year</div><div class="price-desc">Turn 11‑month residencies into 60‑second terminations during lateral movement.</div></div>
+      <div class="price-card"><div class="price-name">LLM Factory</div><div class="price-amount">$50k</div><div class="price-unit">/project avg.</div><div class="price-desc">Privacy‑preserving fine‑tuning on sensitive legal/medical/M&A data.</div></div>
+      <div class="price-card featured"><div class="price-name">WalletShield</div><div class="price-amount">$10k</div><div class="price-unit">/node or tx fee</div><div class="price-desc">Detect non‑human signatures during crypto transaction signing.</div></div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 07 · Competitive Landscape -->
+  <div class="section">
+    <div class="section-label">07 · Blue Ocean Position</div>
+    <div class="section-title">Forensic evidence vs. probabilistic detection</div>
+    <div style="background:var(--ws-card);border:0.5px solid var(--ws-border);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin-bottom:1.5rem">
+      <div class="competitor-row"><div class="comp-name">Traditional Bot Detection</div><div class="comp-lane">Cloudflare, Akamai — stage 1/2 defense</div><div class="comp-gap"><span class="gap-dot"></span>No neural signature forensics</div></div>
+      <div class="competitor-row"><div class="comp-name">Behavioral Analytics</div><div class="comp-lane">BioCatch, ThreatMetrix — pattern‑based</div><div class="comp-gap"><span class="gap-dot"></span>No biological entropy + legal framing</div></div>
+      <div class="competitor-row"><div class="comp-name">Biometric Verification</div><div class="comp-lane">FaceTec, Jumio — PII & hardware dependent</div><div class="comp-gap"><span class="gap-dot"></span>Anonymized interaction‑level privacy</div></div>
+      <div class="competitor-row"><div class="comp-name">SIEM/SOC Platforms</div><div class="comp-lane">Splunk, Darktrace — probabilistic, triage needed</div><div class="comp-gap"><span class="gap-dot"></span>Mathematically final, court‑admissible</div></div>
+      <div class="competitor-row"><div class="comp-name">FairSense Sovereign Lab</div><div class="comp-lane">Neural interaction forensics, SHA‑256 evidence</div><div class="comp-gap" style="color:var(--ws-gold)">The only biological truth layer</div></div>
+    </div>
+    <p class="prose"><strong>Positioning analogy:</strong> FairSense 2026 ≈ Palantir 2008 — niche start, proprietary data advantage, mission‑critical, architectural moat.</p>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 08 · Expansion Roadmap (Phases) -->
+  <div class="section">
+    <div class="section-label">08 · Expansion Roadmap</div>
+    <div class="section-title">From iGaming to national infrastructure</div>
+    <div class="phase-grid">
+      <div class="phase-card p1"><div class="phase-num">Phase 1 (Now)</div><div class="phase-title">iGaming dominance</div><div class="phase-range">30+ ASEAN operators</div><div class="phase-body">$15k/node/year, millions of interactions/day feeding the Vault.</div></div>
+      <div class="phase-card p2"><div class="phase-num">Phase 2 (Months 12‑24)</div><div class="phase-title">BFSI & FinTech</div><div class="phase-range">Synthetic ID, ATO, high‑value tx</div><div class="phase-body">$500/seat/year or transaction‑based. 3 active banking pilots.</div></div>
+      <div class="phase-card p3"><div class="phase-num">Phase 3 (Months 18‑36)</div><div class="phase-title">Verticals expansion</div><div class="phase-range">Healthcare, e‑commerce, gov</div><div class="phase-body">Prescription fraud, digital voting, remote proctoring — sovereign cloud installs.</div></div>
+    </div>
+    <p class="prose"><strong>Enterprise sales motion:</strong> 30‑day Bot Bounty Pilot (performance fee) → 2‑week Forensic Audit → 12‑month Enterprise License. Self‑funding, procurement friction removed.</p>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 09 · The Durable Moat (Data Network Effect) -->
+  <div class="section">
+    <div class="section-label">09 · The Durable Moat</div>
+    <div class="section-title">What compounds over time</div>
+    <div class="moat-row">
+      <div class="moat-cell-head"><div class="moat-label">Now (architecture)</div><div class="moat-val">Triple‑Tower fusion</div><div class="moat-note">1,000Hz biological telemetry + on‑prem/API/Edge — only platform of its kind in ASEAN.</div></div>
+      <div class="moat-cell-head"><div class="moat-label">12 months (evidence)</div><div class="moat-val">Case library</div><div class="moat-note">Every forensic report becomes a court‑referenced precedent in SEA jurisdictions.</div></div>
+      <div class="moat-cell-head"><div class="moat-label">36 months (data)</div><div class="moat-val">Cross‑domain corpus</div><div class="moat-note">100M+ neural signatures — unacquirable. Incumbents cannot replicate.</div></div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 10 · Financial Architecture: $2.55M Ask -->
+  <div class="section">
+    <div class="section-label">10 · Financial Architecture</div>
+    <div class="section-title">Capital efficiency · 24‑month runway</div>
+    <div class="table-wrapper">
+      <table class="client-table">
+        <thead><tr><th>Category</th><th>Item</th><th>Cost</th></tr></thead>
+        <tbody>
+          <tr><td>Immediate Infrastructure (CapEx)</td><td>Triple‑Tower Hive (7x Blackwell, 245TB NVMe, MO‑RA3 cooling) + 30 EVO‑X2 nodes</td><td>$260,000</td></tr>
+          <tr><td>Operational Runway (24 mos)</td><td>Phase 1/2 personnel + ASEAN expansion (TH/PH legal)</td><td>~$1.72M</td></tr>
+          <tr><td>IP Fortress</td><td>Sovereign Neural Integrity Protocol (SG, US, TH, VN, PH) + defense retainer</td><td>$125,000</td></tr>
+          <tr><td>Contingency & Growth Buffer</td><td>15%</td><td>$405,000</td></tr>
+          <tr><td><strong>TOTAL TARGET</strong></td><td></td><td><strong>$2,550,000</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="metric-grid">
+      <div class="metric-card"><div class="metric-number">$2.5M</div><div class="metric-label">Year 1 Revenue</div></div>
+      <div class="metric-card"><div class="metric-number">$8.5M</div><div class="metric-label">Year 2 Revenue</div></div>
+      <div class="metric-card"><div class="metric-number">~66%</div><div class="metric-label">Year 1 EBITDA margin</div></div>
+      <div class="metric-card"><div class="metric-number">$250M</div><div class="metric-label">Year 2 Vault valuation</div></div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 11 · Risks & Mitigations -->
+  <div class="section">
+    <div class="section-label">11 · Risks & Mitigations</div>
+    <div class="section-title">Addressed head‑on</div>
+    <div class="risk-grid">
+      <div class="risk-card"><div class="risk-title">Biometric Privacy Laws</div><div class="risk-body">Vault stores only anonymized entropy hashes (SHA‑256), zero PII. External counsel engaged; PDPA/GDPR audit scheduled post‑funding.</div></div>
+      <div class="risk-card"><div class="risk-title">Hardware Deployment Friction</div><div class="risk-body">Segmented GTM: EVO‑X2 for VIPs; frictionless interpolation SDK/API for enterprise B2B.</div></div>
+      <div class="risk-card"><div class="risk-title">Grey Market Reputational Contagion</div><div class="risk-body">Data Sanctification Wall scrubs metadata before Tier‑1/Gov integration. Legally isolated flows.</div></div>
+      <div class="risk-card"><div class="risk-title">Customer Concentration (iGaming)</div><div class="risk-body">Phase 2 BFSI explicitly diversifies by Month 18. Three active banking pilots in discussion.</div></div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 12 · Strategic Positioning & Exit Optionality -->
+  <div class="section">
+    <div class="section-label">12 · Exit Optionality</div>
+    <div class="section-title">Built as a systemic asset</div>
+    <p class="prose">By Year 2, FairSense will be the only ASEAN‑based provider of high‑frequency biological telemetry at national scale. Natural acquirers:</p>
+    <div class="phase-grid" style="margin-top:0.5rem">
+      <div class="phase-card"><div class="phase-title">Global Identity Platforms</div><div class="phase-body">Okta, Ping, ForgeRock — need biometric authentication vs. Microsoft/Entra</div></div>
+      <div class="phase-card"><div class="phase-title">Payment Networks</div><div class="phase-body">Visa, Mastercard — “human verification” for high‑risk transactions</div></div>
+      <div class="phase-card"><div class="phase-title">Cybersecurity Giants</div><div class="phase-body">CrowdStrike, Palo Alto — they detect malware, not absence of humanity</div></div>
+    </div>
+    <p class="prose">We are not building for a fire sale. We are building a systemic asset that global infrastructure giants will need to acquire to patch their biological blindspots.</p>
+  </div>
+
+  <div class="footer-bar">
+    <span>FairSense Sovereign Lab (FSL) · Biological Truth Infrastructure v4.0</span>
+    <span>February 2026 · Investor Memorandum</span>
+  </div>
+
+</div>
+</body>
+</html>
+```
