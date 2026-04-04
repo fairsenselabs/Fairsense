@@ -1,13 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>FairSense — The Biological Firewall</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script>
+  // Prevent flash of incorrect theme on load
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme) {
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+    document.documentElement.setAttribute('data-theme', 'light');
+  }
+</script>
 <style>
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   THEME VARIABLES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 :root {
+  /* Default Dark Mode */
   --bg: #06060a;
   --bg2: #0c0d12;
   --accent: #9db8ca;
@@ -18,14 +31,74 @@
   --muted: #ffffff;
   --red: #df4f4f;
   --green: #4ec98a;
+
+  /* Component specific (previously hardcoded) */
+  --cinematic-bg: rgba(0, 0, 0, 0.85);
+  --scan-line: rgba(0, 0, 0, 0.12);
+  --card-bg: #000;
+  --card-border: rgba(255, 255, 255, 0.15);
+  --evidence-overlay: rgba(0, 0, 0, 0.78);
+  --term-bg: #07070f;
+  --row-border: rgba(255, 255, 255, 0.03);
+  --track-bg: rgba(255, 255, 255, 0.04);
+  --bar-lg-bg: rgba(255, 255, 255, 0.28);
+  --modal-bg: rgba(0, 0, 0, 0.96);
+  --tag-bg: rgba(0, 0, 0, 0.3);
+
+  /* SVG & Highlight specifics */
+  --red-dim: rgba(223, 79, 79, 0.04);
+  --red-border: rgba(223, 79, 79, 0.18);
+  --red-stroke: rgba(223, 79, 79, 0.75);
+  --red-stroke-dim: rgba(223, 79, 79, 0.4);
+  
+  --green-dim: rgba(78, 201, 138, 0.04);
+  --green-border: rgba(78, 201, 138, 0.28);
+  --green-stroke: rgba(78, 201, 138, 0.85);
+}
+
+[data-theme="light"] {
+  /* Light Mode Overrides */
+  --bg: #f5f7fa;
+  --bg2: #e4e7eb;
+  --accent: #2c5282;
+  --accent-dim: rgba(44, 82, 130, 0.09);
+  --accent-border: rgba(44, 82, 130, 0.25);
+  --white: #1a202c;
+  --body: #4a5568;
+  --muted: #718096;
+  --red: #e53e3e;
+  --green: #38a169;
+
+  /* Component specific light variants */
+  --cinematic-bg: rgba(245, 247, 250, 0.95);
+  --scan-line: rgba(0, 0, 0, 0.05);
+  --card-bg: #fff;
+  --card-border: rgba(0, 0, 0, 0.1);
+  --evidence-overlay: rgba(245, 247, 250, 0.85);
+  --term-bg: #edf2f7;
+  --row-border: rgba(0, 0, 0, 0.06);
+  --track-bg: rgba(0, 0, 0, 0.06);
+  --bar-lg-bg: rgba(0, 0, 0, 0.15);
+  --modal-bg: rgba(245, 247, 250, 0.96);
+  --tag-bg: rgba(0, 0, 0, 0.05);
+
+  --red-dim: rgba(229, 62, 62, 0.08);
+  --red-border: rgba(229, 62, 62, 0.3);
+  --red-stroke: rgba(229, 62, 62, 0.85);
+  --red-stroke-dim: rgba(229, 62, 62, 0.4);
+
+  --green-dim: rgba(56, 161, 105, 0.08);
+  --green-border: rgba(56, 161, 105, 0.3);
+  --green-stroke: rgba(56, 161, 105, 0.85);
 }
 
 * { margin:0; padding:0; box-sizing:border-box; }
 
 body, html {
-  height:100%; background:#000; color:var(--white);
+  height:100%; background:var(--bg); color:var(--white);
   font-family:'DM Sans', sans-serif;
   overflow:hidden; cursor:default;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -35,7 +108,7 @@ body, html {
   position: fixed;
   inset: 0;
   z-index: 400;
-  background: rgba(0, 0, 0, 0.85);  /* semi‑transparent black */
+  background: var(--cinematic-bg);
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -43,15 +116,13 @@ body, html {
   animation: cineExit 0.8s 16s ease-in forwards;
 }
 
-/* Persistent scan-line */
 #cinematic::after {
   content:''; position:absolute; inset:0; z-index:50; pointer-events:none;
   background: repeating-linear-gradient(0deg,
     transparent, transparent 3px,
-    rgba(0,0,0,0.12) 3px, rgba(0,0,0,0.12) 4px);
+    var(--scan-line) 3px, var(--scan-line) 4px);
 }
 
-/* ── Phase 1: Opening statement ── */
 .cine-phase1 {
   position:absolute; inset:0; z-index:30;
   display:flex; flex-direction:column;
@@ -75,7 +146,6 @@ body, html {
   animation: lineIn 0.5s 2.5s ease-out forwards;
 }
 
-/* ── Phase 2: Evidence wall (full‑screen grid, no cropping) ── */
 .evidence-wall {
   position: absolute;
   inset: 0;
@@ -92,21 +162,18 @@ body, html {
   animation: wallReveal 0.3s 4.2s ease forwards;
 }
 
-/* News cards – show full image without cropping (object-fit: contain) */
 .news-card {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  object-position: top center;
-  background: #000;
+  object-position: center;
+  background: var(--card-bg);
   border-radius: 8px;
-  border: 1px solid rgba(255,255,255,0.15);
+  border: 1px solid var(--card-border);
   opacity: 0;
-  filter: brightness(0.7) saturate(0.6);
   transition: all 0.2s;
 }
 
-/* staggered crash-in for each card */
 .news-card:nth-child(1) { animation: cardCrash 0.5s 4.4s ease-out forwards; }
 .news-card:nth-child(2) { animation: cardCrash 0.5s 4.8s ease-out forwards; }
 .news-card:nth-child(3) { animation: cardCrash 0.5s 5.2s ease-out forwards; }
@@ -116,15 +183,13 @@ body, html {
 .news-card:nth-child(7) { animation: cardCrash 0.5s 6.8s ease-out forwards; }
 .news-card:nth-child(8) { animation: cardCrash 0.5s 7.2s ease-out forwards; }
 
-/* Dark overlay that dims the evidence wall */
 .evidence-overlay {
   position:absolute; inset:0; z-index:35;
-  background:rgba(0,0,0,0.78);
+  background: var(--evidence-overlay);
   opacity:0; pointer-events:none;
   animation: overlayIn 0.6s 7.8s ease forwards;
 }
 
-/* ── Phase 3: FairSense answer ── */
 .cine-answer {
   position:absolute; inset:0; z-index:40;
   display:flex; flex-direction:column;
@@ -239,10 +304,8 @@ body, html {
   width:1px; background:var(--accent-border);
 }
 
-/* alt bg */
 #s2, #s4, #s6 { background:var(--bg2); }
 
-/* TYPOGRAPHY */
 .tag {
   display:inline-block; font-family:'JetBrains Mono', monospace;
   font-size:0.6rem; letter-spacing:0.25em; text-transform:uppercase;
@@ -273,7 +336,6 @@ body, html {
   color:var(--muted); letter-spacing:0.1em; margin-top:0.5rem;
 }
 
-/* METRICS GRID */
 .metrics {
   display:grid; grid-template-columns:repeat(2,1fr); gap:1px;
   border:1px solid var(--accent-border); background:var(--accent-border);
@@ -292,7 +354,6 @@ body, html {
   letter-spacing:0.1em; text-transform:uppercase; color:var(--muted);
 }
 
-/* FIXED CHROME – LOGO VISIBLE FROM START (NO !important CONFLICT) */
 .logo {
   position: fixed;
   top: 1rem;
@@ -301,8 +362,6 @@ body, html {
   opacity: 1;
   transition: opacity 0.4s ease, visibility 0.4s ease;
 }
-
-/* New class to trigger the hide */
 .logo.logo-hidden {
   opacity: 0;
   visibility: hidden;
@@ -314,7 +373,14 @@ body, html {
   display: block;
   opacity: 0.92;
   filter: brightness(0.88) saturate(0.5) sepia(0.3) hue-rotate(175deg);
+  transition: filter 0.3s ease;
 }
+
+/* Invert the logo color for light theme */
+[data-theme="light"] .logo img {
+  filter: invert(1) brightness(0.4) saturate(1.5) hue-rotate(175deg);
+}
+
 .counter {
   position:fixed; bottom:1.8rem; right:2.2rem; z-index:100;
   font-family:'JetBrains Mono', monospace; font-size:0.6rem;
@@ -328,29 +394,26 @@ body, html {
   opacity:0; animation:fadeIn 0.5s 20.5s both, hintPulse 2s 21s infinite;
 }
 
-/* BG GRID */
 .bg-grid {
   position:absolute; inset:0; pointer-events:none;
   background-image:
-    linear-gradient(rgba(157,184,202,0.022) 1px, transparent 1px),
-    linear-gradient(90deg,rgba(157,184,202,0.022) 1px, transparent 1px);
+    linear-gradient(var(--accent-dim) 1px, transparent 1px),
+    linear-gradient(90deg,var(--accent-dim) 1px, transparent 1px);
   background-size:60px 60px;
 }
 
-/* SLIDE 1 specific */
 #s1 .slide-text { padding-left:10vw; }
 #s1 .slide-text::after { display:none; }
 .bleed-number {
   position:absolute; right:3vw; top:50%; transform:translateY(-50%);
   font-family:'Rajdhani', sans-serif; font-weight:700;
   font-size:clamp(10rem,20vw,26rem);
-  color:transparent; -webkit-text-stroke:1px rgba(157,184,202,0.07);
+  color:transparent; -webkit-text-stroke:1px var(--accent-dim);
   line-height:1; user-select:none; pointer-events:none; white-space:nowrap;
 }
 
-/* FAIL CARDS */
 .fail-card {
-  border:1px solid rgba(223,79,79,0.18); background:rgba(223,79,79,0.04);
+  border:1px solid var(--red-border); background:var(--red-dim);
   padding:0.85rem 1.05rem; border-radius:3px; margin-bottom:0.65rem;
 }
 .fail-head {
@@ -365,7 +428,6 @@ body, html {
   font-size:0.92rem; color:var(--muted); line-height:1.65;
 }
 
-/* WAVE VIZ (S2) */
 .wave-label {
   font-family:'JetBrains Mono', monospace; font-size:0.6rem;
   letter-spacing:0.18em; text-transform:uppercase; margin-bottom:0.65rem;
@@ -376,8 +438,8 @@ body, html {
   border:1px solid; border-radius:3px; padding:0.7rem;
   margin-bottom:1rem; position:relative; overflow:hidden; height:84px;
 }
-.wave-box.human { border-color:rgba(78,201,138,0.28); background:rgba(78,201,138,0.03); }
-.wave-box.bot   { border-color:rgba(223,79,79,0.28); background:rgba(223,79,79,0.03); }
+.wave-box.human { border-color:var(--green-border); background:var(--green-dim); }
+.wave-box.bot   { border-color:var(--red-border); background:var(--red-dim); }
 .wave-box svg { position:absolute; inset:0; width:100%; height:100%; }
 .wave-desc {
   position:absolute; right:0.75rem; top:50%; transform:translateY(-50%);
@@ -394,13 +456,12 @@ body, html {
   margin-right:0.4rem; margin-bottom:0.5rem;
 }
 
-/* TERMINAL (S3) */
 .proof-terminal {
-  background:#07070f; border:1px solid var(--accent-border);
+  background:var(--term-bg); border:1px solid var(--accent-border);
   border-radius:4px; overflow:hidden; font-family:'JetBrains Mono', monospace;
 }
 .t-bar {
-  background:rgba(157,184,202,0.06); border-bottom:1px solid var(--accent-border);
+  background:var(--accent-dim); border-bottom:1px solid var(--accent-border);
   padding:0.48rem 0.8rem; display:flex; align-items:center; gap:0.5rem;
   font-size:0.56rem; letter-spacing:0.15em; color:var(--muted); text-transform:uppercase;
 }
@@ -409,34 +470,32 @@ body, html {
 .t-body { padding:0.75rem; }
 .t-row {
   display:grid; grid-template-columns:0.55fr 1fr 0.42fr 0.5fr 0.7fr;
-  gap:0.45rem; padding:0.42rem 0; border-bottom:1px solid rgba(255,255,255,0.03);
+  gap:0.45rem; padding:0.42rem 0; border-bottom:1px solid var(--row-border);
   align-items:center; font-size:0.68rem;
 }
 .t-row.hdr { color:var(--muted); font-size:0.56rem; letter-spacing:0.12em; text-transform:uppercase; }
 
-/* BAR CHART (S3) */
 .vs-legend { display:flex; gap:1.2rem; margin-bottom:0.9rem;
   font-family:'DM Sans',sans-serif; font-size:0.62rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); }
 .vs-legend span::before { content:'■ '; }
 .l-fs::before { color:var(--accent); }
-.l-lg::before { color:rgba(255,255,255,0.18); }
+.l-lg::before { color:var(--bar-lg-bg); }
 .bar-row { display:grid; grid-template-columns:78px 1fr 50px; align-items:center; gap:0.65rem; margin-bottom:0.8rem; }
 .bar-name { font-family:'DM Sans',sans-serif; font-size:0.6rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); }
-.bar-track { height:17px; background:rgba(255,255,255,0.04); border-radius:2px; overflow:hidden; }
-.bar-fs { height:100%; border-radius:2px; background:linear-gradient(90deg,var(--accent),rgba(157,184,202,0.45)); }
-.bar-lg { height:100%; border-radius:2px; background:rgba(255,255,255,0.28); }
+.bar-track { height:17px; background:var(--track-bg); border-radius:2px; overflow:hidden; }
+.bar-fs { height:100%; border-radius:2px; background:linear-gradient(90deg,var(--accent),var(--accent-dim)); }
+.bar-lg { height:100%; border-radius:2px; background:var(--bar-lg-bg); }
 .bar-val { font-family:'JetBrains Mono',monospace; font-size:0.65rem; color:var(--muted); text-align:right; }
 .bar-val.hi { color:var(--accent); }
 
-/* VAULT (S4) */
 .vault-ring {
   width:190px; height:190px; border-radius:50%;
   border:1px solid var(--accent-border);
   display:flex; align-items:center; justify-content:center;
   position:relative; margin:0 auto 1.6rem;
 }
-.vault-ring::before { content:''; position:absolute; inset:-13px; border-radius:50%; border:1px dashed rgba(157,184,202,0.1); }
-.vault-ring::after  { content:''; position:absolute; inset:-28px; border-radius:50%; border:1px dashed rgba(157,184,202,0.05); }
+.vault-ring::before { content:''; position:absolute; inset:-13px; border-radius:50%; border:1px dashed var(--accent-dim); }
+.vault-ring::after  { content:''; position:absolute; inset:-28px; border-radius:50%; border:1px dashed var(--accent-dim); }
 .orbit-dot {
   position:absolute; width:5px; height:5px; border-radius:50%;
   background:var(--accent); top:50%; left:50%; margin:-2.5px;
@@ -444,11 +503,10 @@ body, html {
 }
 .vval { font-family:'JetBrains Mono',monospace; font-size:1.7rem; font-weight:700; color:var(--white); line-height:1; margin-bottom:0.25rem; text-align:center; }
 .vlbl { font-family:'DM Sans',sans-serif; font-size:0.6rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--muted); text-align:center; }
-.vault-stat { display:flex; justify-content:space-between; align-items:baseline; padding:0.62rem 0; border-bottom:1px solid rgba(255,255,255,0.04); }
+.vault-stat { display:flex; justify-content:space-between; align-items:baseline; padding:0.62rem 0; border-bottom:1px solid var(--row-border); }
 .vskey { font-family:'DM Sans',sans-serif; font-size:0.7rem; color:var(--muted); }
 .vsval { font-family:'JetBrains Mono',monospace; font-size:0.75rem; color:var(--accent); }
 
-/* ASK (S6) */
 .ask-number {
   font-family:'Rajdhani',sans-serif; font-weight:700;
   font-size:clamp(4.5rem,9vw,9rem); color:var(--white); line-height:0.9; margin-bottom:0.4rem;
@@ -456,7 +514,7 @@ body, html {
 .alloc-item { margin-bottom:1rem; }
 .alloc-lbl { font-family:'DM Sans',sans-serif; font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); margin-bottom:0.35rem; }
 .alloc-row { display:flex; align-items:center; gap:0.8rem; }
-.alloc-track { flex:1; height:3px; background:rgba(255,255,255,0.06); border-radius:2px; }
+.alloc-track { flex:1; height:3px; background:var(--track-bg); border-radius:2px; }
 .alloc-fill  { height:100%; border-radius:2px; background:var(--accent); }
 .alloc-pct   { font-family:'JetBrains Mono',monospace; font-size:0.68rem; color:var(--accent); width:2.4rem; text-align:right; }
 .cta-btn {
@@ -467,7 +525,7 @@ body, html {
   text-decoration:none; border-radius:2px; margin-top:1.8rem;
   transition:background 0.2s;
 }
-.cta-btn:hover { background:var(--white); }
+.cta-btn:hover { background:var(--white); color:var(--bg); }
 .proj-block { border:1px solid var(--accent-border); padding:1.1rem 1.5rem; background:var(--accent-dim); border-radius:3px; margin-bottom:0.9rem; }
 .proj-lbl { font-family:'DM Sans',sans-serif; font-size:0.6rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--muted); margin-bottom:0.45rem; }
 .proj-val { font-family:'Rajdhani',sans-serif; font-size:2.1rem; font-weight:700; color:var(--white); line-height:1; }
@@ -529,31 +587,53 @@ body, html {
   }
 }
 
-/* Skip button */
+/* Skip button & Theme Toggle */
 #skip-btn {
-  position:fixed; top:1.6rem; right:2.2rem; z-index:500;
-  font-family:'JetBrains Mono', monospace; font-size:0.6rem;
-  letter-spacing:0.2em; text-transform:uppercase; color:var(--muted);
-  background:transparent; border:1px solid rgba(255,255,255,0.15);
-  padding:0.4rem 0.9rem; border-radius:2px; cursor:pointer;
-  opacity:0; animation:fadeIn 0.4s 1s both;
-  transition:all 0.2s;
+  position: fixed; 
+  bottom: 1.8rem; /* Moved to bottom */
+  right: 2.2rem; 
+  z-index: 500;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.6rem;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
+  background: transparent; border: 1px solid var(--card-border);
+  padding: 0.4rem 0.9rem; border-radius: 2px; cursor: pointer;
+  opacity: 0; animation: fadeIn 0.4s 1s both;
+  transition: all 0.2s;
+  color: red;
 }
-#skip-btn:hover { background:rgba(255,255,255,0.08); color:var(--white); border-color:rgba(255,255,255,0.3); }
+#skip-btn:hover { background:var(--track-bg); color:var(--white); border-color:var(--accent-border); }
 #skip-btn.hidden { display:none; }
+
+#theme-toggle {
+  position: fixed; 
+  top: 1.6rem;   
+  right: 2.2rem; 
+  z-index: 500;
+  background: var(--bg); border: 1px solid var(--accent-border);
+  color: var(--muted); width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.2s ease;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  
+  /* Make it visible immediately */
+  opacity: 1; 
+}
+
+#theme-toggle:hover {
+  background: var(--accent-dim); color: var(--white);
+}
 </style>
 </head>
 <body>
 
-<!-- SKIP BUTTON -->
+<button id="theme-toggle" onclick="toggleTheme()" title="Toggle Light/Dark Theme">🌓</button>
+
 <button id="skip-btn" onclick="skipIntro()">Skip Intro ›</button>
 
-<!-- FIXED CHROME -->
 <div class="logo"><img src="https://stage.ogsalliance.com/images/fslogo.png" alt="FairSense Sovereign Lab"></div>
 <div class="counter" id="counter">01 / 07</div>
 <div class="scroll-hint">Scroll to advance</div>
 
-<!-- CINEMATIC INTRO -->
 <div id="cinematic">
   <div class="cine-phase1">
     <div class="cine-line l1">The Gates Are Open.</div>
@@ -584,7 +664,6 @@ body, html {
   </div>
 </div>
 
-<!-- BRAND CURTAIN -->
 <div id="brand-intro">
   <div class="intro-eyebrow">Confidential &middot; Investor Brief 2026</div>
   <div class="intro-headline">The Biological<br><em>Firewall.</em></div>
@@ -592,10 +671,8 @@ body, html {
   <div class="intro-sub">FairSense Sovereign Lab</div>
 </div>
 
-<!-- DECK (7 slides) -->
 <div class="deck" id="deck">
 
-  <!-- S1: PROBLEM -->
   <section class="slide layout-split" id="s1">
     <div class="bg-grid"></div>
     <div class="slide-text">
@@ -621,7 +698,6 @@ body, html {
     <div class="bleed-number">$20B</div>
   </section>
 
-  <!-- S2: SCIENCE -->
   <section class="slide layout-split" id="s2">
     <div class="bg-grid"></div>
     <div class="slide-text">
@@ -640,15 +716,14 @@ body, html {
     <div class="slide-visual" style="flex-direction:column;align-items:stretch;padding-left:4vw;padding-right:8vw;">
       <div style="max-width:375px;width:100%;">
         <div class="wave-label human">◉ &nbsp;Human Session · ApEn = 0.84</div>
-        <div class="wave-box human"><svg viewBox="0 0 340 80" preserveAspectRatio="none"><path d="M0,40 C8,34 14,26 22,31 C30,36 32,44 44,38 C56,32 58,20 70,29 C82,38 84,46 96,39 C108,32 110,24 124,33 C138,42 140,48 154,38 C168,28 170,18 184,30 C198,42 200,48 214,36 C228,24 230,14 246,28 C262,42 264,50 280,37 C296,24 300,14 316,28 C328,38 334,44 340,36" fill="none" stroke="rgba(78,201,138,0.85)" stroke-width="1.6"/></svg><div class="wave-desc">Chaotic · Irregular<br>Biologically Human</div></div>
+        <div class="wave-box human"><svg viewBox="0 0 340 80" preserveAspectRatio="none"><path d="M0,40 C8,34 14,26 22,31 C30,36 32,44 44,38 C56,32 58,20 70,29 C82,38 84,46 96,39 C108,32 110,24 124,33 C138,42 140,48 154,38 C168,28 170,18 184,30 C198,42 200,48 214,36 C228,24 230,14 246,28 C262,42 264,50 280,37 C296,24 300,14 316,28 C328,38 334,44 340,36" fill="none" stroke="var(--green-stroke)" stroke-width="1.6"/></svg><div class="wave-desc">Chaotic · Irregular<br>Biologically Human</div></div>
         <div class="wave-label bot" style="margin-top:1rem;">◎ &nbsp;Bot Session · ApEn = 0.02</div>
-        <div class="wave-box bot"><svg viewBox="0 0 340 80" preserveAspectRatio="none"><path d="M0,40 L340,40" fill="none" stroke="rgba(223,79,79,0.75)" stroke-width="1.6"/><path d="M68,40 L68,22 L86,22 L86,40" fill="none" stroke="rgba(223,79,79,0.4)" stroke-width="1"/><path d="M188,40 L188,22 L206,22 L206,40" fill="none" stroke="rgba(223,79,79,0.4)" stroke-width="1"/><path d="M308,40 L308,22 L326,22 L326,40" fill="none" stroke="rgba(223,79,79,0.4)" stroke-width="1"/></svg><div class="wave-desc">Perfect · Regular<br>Mathematically Dead</div></div>
+        <div class="wave-box bot"><svg viewBox="0 0 340 80" preserveAspectRatio="none"><path d="M0,40 L340,40" fill="none" stroke="var(--red-stroke)" stroke-width="1.6"/><path d="M68,40 L68,22 L86,22 L86,40" fill="none" stroke="var(--red-stroke-dim)" stroke-width="1"/><path d="M188,40 L188,22 L206,22 L206,40" fill="none" stroke="var(--red-stroke-dim)" stroke-width="1"/><path d="M308,40 L308,22 L326,22 L326,40" fill="none" stroke="var(--red-stroke-dim)" stroke-width="1"/></svg><div class="wave-desc">Perfect · Regular<br>Mathematically Dead</div></div>
         <div style="margin-top:1.2rem;padding:0.85rem 1rem;border:1px solid var(--accent-border);background:var(--accent-dim);border-radius:3px;"><div style="font-family:'JetBrains Mono',monospace;font-size:0.56rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:0.35rem;">Key Principle</div><div style="font-family:'DM Sans',sans-serif;font-size:0.78rem;color:var(--body);line-height:1.6;">Faking human entropy costs more compute than the fraud is worth. Biology is the final wall — and an economic impossibility to bypass.</div></div>
       </div>
     </div>
   </section>
 
-  <!-- S3: LIVE PROOF -->
   <section class="slide layout-right" id="s3">
     <div class="bg-grid"></div>
     <div class="slide-text">
@@ -677,7 +752,6 @@ body, html {
     </div>
   </section>
 
-  <!-- S4: DATA VAULT -->
   <section class="slide layout-split" id="s4">
     <div class="bg-grid"></div>
     <div class="slide-text">
@@ -703,7 +777,7 @@ body, html {
           <div class="vault-stat"><span class="vskey">Strategic Buyers</span><span class="vsval">Visa · AWS · CrowdStrike · CSA</span></div>
         </div>
         <div class="hardware-badge" style="text-align:center; margin-top:0.5rem;">
-          <span class="hz-badge" style="cursor:pointer;color:#5CFF0F;font-size:0.85rem;" onclick="toggleHardware()">⚙️ Tap Here: FS Sovereign Hardware</span>
+          <span class="hz-badge" style="cursor:pointer;color:var(--green);font-size:0.85rem;" onclick="toggleHardware()">⚙️ Tap Here: FS Sovereign Hardware</span>
           <div id="hardware-detail" style="display:none; margin-top:0.5rem;">
             <img src="https://stage.ogsalliance.com/images/d2.png" style="max-width:100%; border-radius:8px; border:1px solid var(--accent-border);">
             <p style="font-size:0.65rem; color:var(--muted); margin-top:0.3rem;">FS-Hive Ultimate · Threadripper Pro · H200 NVL</p>
@@ -714,7 +788,6 @@ body, html {
     </div>
   </section>
 
-  <!-- S5: UNC3886 CASE STUDY -->
   <section class="slide layout-split" id="s5">
     <div class="bg-grid"></div>
     <div class="slide-text">
@@ -732,9 +805,9 @@ body, html {
     <div class="slide-visual" style="flex-direction:column;align-items:stretch;padding-right:5vw;padding-left:3vw;gap:0.7rem;overflow-y:auto;padding-top:3vh;padding-bottom:3vh;">
       <div style="max-width:440px;width:100%;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.9rem;"><div style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);">OGS Hive Red Team Simulation · Vibranium Grade</div><div style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;color:var(--green);letter-spacing:0.1em;">SYSTEMS NOMINAL ✓</div></div>
-        <div style="border:1px solid rgba(78,201,138,0.25);background:rgba(78,201,138,0.04);border-radius:3px;padding:0.85rem 1rem;margin-bottom:0.65rem;"><div style="display:flex;justify-content:space-between;margin-bottom:0.45rem;"><div style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--green);">Vector A · DNS Tunneling</div><div style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;color:var(--green);">DETECTED ✓</div></div><div style="font-family:'DM Sans',sans-serif;font-size:0.78rem;color:var(--body);line-height:1.5;margin-bottom:0.5rem;">High-frequency DNS TXT queries to external resolvers, bypassing egress filtering.</div><div style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:rgba(78,201,138,0.6);background:rgba(0,0,0,0.3);padding:0.3rem 0.5rem;border-radius:2px;">[UNC3886-SIM] DNS TUNNEL: 20 high-freq TXT queries → FLAGGED</div></div>
-        <div style="border:1px solid rgba(78,201,138,0.25);background:rgba(78,201,138,0.04);border-radius:3px;padding:0.85rem 1rem;margin-bottom:0.65rem;"><div style="display:flex;justify-content:space-between;margin-bottom:0.45rem;"><div style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--green);">Vector B · Process Masquerading</div><div style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;color:var(--green);">DETECTED ✓</div></div><div style="font-family:'DM Sans',sans-serif;font-size:0.78rem;color:var(--body);line-height:1.5;margin-bottom:0.5rem;">Malicious binary renamed to <em>vmware-vmtoolsd</em> to hide in the process tree.</div><div style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:rgba(78,201,138,0.6);background:rgba(0,0,0,0.3);padding:0.3rem 0.5rem;border-radius:2px;">[ALARM] MALICIOUS MASQUERADE: /tmp/vmware-vmtoolsd on OG1 → FLAGGED</div></div>
-        <div style="border:1px solid rgba(78,201,138,0.25);background:rgba(78,201,138,0.04);border-radius:3px;padding:0.85rem 1rem;margin-bottom:0.85rem;"><div style="display:flex;justify-content:space-between;margin-bottom:0.45rem;"><div style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--green);">Vector C · Persistence Hook</div><div style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;color:var(--green);">DETECTED ✓</div></div><div style="font-family:'DM Sans',sans-serif;font-size:0.78rem;color:var(--body);line-height:1.5;margin-bottom:0.5rem;">Crontab @reboot hook planted to survive restarts. Lateral movement intercepted.</div><div style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:rgba(78,201,138,0.6);background:rgba(0,0,0,0.3);padding:0.3rem 0.5rem;border-radius:2px;">[ALARM] SYSTEM INTEGRITY: New startup hook in crontab → FLAGGED</div></div>
+        <div style="border:1px solid var(--green-border);background:var(--green-dim);border-radius:3px;padding:0.85rem 1rem;margin-bottom:0.65rem;"><div style="display:flex;justify-content:space-between;margin-bottom:0.45rem;"><div style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--green);">Vector A · DNS Tunneling</div><div style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;color:var(--green);">DETECTED ✓</div></div><div style="font-family:'DM Sans',sans-serif;font-size:0.78rem;color:var(--body);line-height:1.5;margin-bottom:0.5rem;">High-frequency DNS TXT queries to external resolvers, bypassing egress filtering.</div><div style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:var(--green);background:var(--tag-bg);padding:0.3rem 0.5rem;border-radius:2px;">[UNC3886-SIM] DNS TUNNEL: 20 high-freq TXT queries → FLAGGED</div></div>
+        <div style="border:1px solid var(--green-border);background:var(--green-dim);border-radius:3px;padding:0.85rem 1rem;margin-bottom:0.65rem;"><div style="display:flex;justify-content:space-between;margin-bottom:0.45rem;"><div style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--green);">Vector B · Process Masquerading</div><div style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;color:var(--green);">DETECTED ✓</div></div><div style="font-family:'DM Sans',sans-serif;font-size:0.78rem;color:var(--body);line-height:1.5;margin-bottom:0.5rem;">Malicious binary renamed to <em>vmware-vmtoolsd</em> to hide in the process tree.</div><div style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:var(--green);background:var(--tag-bg);padding:0.3rem 0.5rem;border-radius:2px;">[ALARM] MALICIOUS MASQUERADE: /tmp/vmware-vmtoolsd on OG1 → FLAGGED</div></div>
+        <div style="border:1px solid var(--green-border);background:var(--green-dim);border-radius:3px;padding:0.85rem 1rem;margin-bottom:0.85rem;"><div style="display:flex;justify-content:space-between;margin-bottom:0.45rem;"><div style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--green);">Vector C · Persistence Hook</div><div style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;color:var(--green);">DETECTED ✓</div></div><div style="font-family:'DM Sans',sans-serif;font-size:0.78rem;color:var(--body);line-height:1.5;margin-bottom:0.5rem;">Crontab @reboot hook planted to survive restarts. Lateral movement intercepted.</div><div style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:var(--green);background:var(--tag-bg);padding:0.3rem 0.5rem;border-radius:2px;">[ALARM] SYSTEM INTEGRITY: New startup hook in crontab → FLAGGED</div></div>
         <div style="border:1px solid var(--accent-border);background:var(--accent-dim);border-radius:3px;padding:0.85rem 1rem;"><div style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:0.6rem;">The 60-Second Kill Chain</div><div style="display:grid;grid-template-columns:auto 1fr;gap:0.3rem 0.7rem;font-family:'JetBrains Mono',monospace;font-size:0.62rem;"><span style="color:var(--muted);">0–2s</span><span style="color:var(--body);">APT script initiates pivot with stolen credential → IAM: PASS</span><span style="color:var(--muted);">2–5s</span><span style="color:var(--body);">Bionium detects zero neural jitter → Non-Biological / Scripted</span><span style="color:var(--muted);">5–20s</span><span style="color:var(--green);">Session terminated · credential purged · origin blacklisted</span><span style="color:var(--muted);">Result</span><span style="color:var(--green);font-weight:700;">Zero data exfiltrated · Cloud firewall updated</span></div></div>
         <div style="display:flex; gap:1rem; margin-top:1rem;">
           <img src="https://stage.ogsalliance.com/images/d7.png" style="width:120px; border-radius:6px; border:1px solid var(--accent-border); transition: transform 0.2s; cursor: pointer;" title="Click to expand – WalletSense DeFi demo">
@@ -744,7 +817,6 @@ body, html {
     </div>
   </section>
 
-  <!-- S6: THE ASK -->
   <section class="slide layout-split" id="s6">
     <div class="bg-grid"></div>
     <div class="slide-text">
@@ -771,31 +843,38 @@ body, html {
     </div>
   </section>
 
-  <!-- S7: CLOSING SLIDE (Sovereign Seal) -->
  <style>
-  /* Target the image specifically within this container */
   .fairsense-footer-img {
-
     width: auto;
     display: block;
     margin: 0 auto 2rem;
-    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Smooth bounce effect */
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s ease; 
     cursor: pointer;
     filter: brightness(0.9) saturate(0.7);
   }
-
   .fairsense-footer-img:hover {
     transform: scale(1.2);
     filter: brightness(1) saturate(1);
   }
+[data-theme="light"] .fairsense-footer-img {
+    /* Swaps the image source to the JPG */
+    content: url("https://stage.ogsalliance.com/images/d5.jpg");
+    
+    /* Resets the filter so it shows the JPG's natural colors */
+    filter: drop-shadow(0 0 10px rgba(0,0,0,0.1)); 
+  }
+  
+  [data-theme="light"] .fairsense-footer-img:hover {
+    /* Optional: Add a slight hover effect for the light mode JPG */
+    filter: brightness(0.9);
+  }
 </style>
-<!-- ─── S7: CLOSING SLIDE – Sovereign Seal ─── -->
 <section class="slide" id="s7" style="display: flex; align-items: center; justify-content: center; text-align: center; background: var(--bg);">
   <div class="bg-grid"></div>
-  <div style="max-width:800px; margin: 0 auto;">
+  <div style="max-width:800px; margin: 0 auto; position:relative; z-index:2;">
     <img src="https://stage.ogsalliance.com/images/d5.png" 
          alt="FairSense Sovereign Lab"  class="fairsense-footer-img"
-         style="width: 80%; margin-bottom: 2rem; opacity: 0.9; filter: drop-shadow(0 0 10px rgba(157,184,202,0.3));">
+         style="width: 80%; margin-bottom: 2rem; opacity: 0.9;">
     <h2 style="font-family: 'Rajdhani', sans-serif; font-size: 2rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1rem;">
       Sovereign Intelligence<br>for the Digital Age
     </h2>
@@ -809,16 +888,23 @@ body, html {
 
 </div>
 
-<!-- SINGLE UNIVERSAL MODAL (for all images except closing slide) -->
-<div id="imageModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.96); z-index: 2000; align-items: center; justify-content: center; cursor: pointer; backdrop-filter: blur(4px);">
+<div id="imageModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--modal-bg); z-index: 2000; align-items: center; justify-content: center; cursor: pointer; backdrop-filter: blur(4px);">
   <div style="max-width: 90%; max-height: 90%; text-align: center;">
-    <img id="modalImage" src="" alt="Enlarged view" style="max-width: 100%; max-height: 80vh; border-radius: 12px; border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 0 40px rgba(0,0,0,0.6);">
+    <img id="modalImage" src="" alt="Enlarged view" style="max-width: 100%; max-height: 80vh; border-radius: 12px; border: 1px solid var(--accent-border); box-shadow: 0 0 40px rgba(0,0,0,0.2);">
     <div id="modalCaption" style="margin-top: 1rem; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--muted);"></div>
     <div style="margin-top: 0.5rem; font-family: 'DM Sans', sans-serif; font-size: 0.6rem; color: var(--muted); letter-spacing: 0.1em;">Tap anywhere to close</div>
   </div>
 </div>
 
 <script>
+// ========== THEME TOGGLE LOGIC ==========
+window.toggleTheme = function() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+};
+
 // ========== FULL SCRIPT ==========
 (function() {
   // ---- Skip intro ----
@@ -830,11 +916,14 @@ body, html {
     const logo = document.querySelector('.logo');
     const counter = document.getElementById('counter');
     const hint = document.querySelector('.scroll-hint');
+    const themeBtn = document.getElementById('theme-toggle');
+
     if (cine) { cine.style.animation = 'none'; cine.style.opacity = '0'; cine.style.visibility = 'hidden'; cine.style.pointerEvents = 'none'; }
     if (brand) { brand.style.animation = 'none'; brand.style.opacity = '0'; brand.style.visibility = 'hidden'; brand.style.pointerEvents = 'none'; }
     if (deck) { deck.style.animation = 'none'; deck.style.opacity = '1'; }
     if (logo) logo.style.opacity = '1';
     if (counter) counter.style.opacity = '1';
+    if (themeBtn) themeBtn.style.opacity = '1';
     if (hint) hint.style.opacity = '0.5';
     if (btn) btn.classList.add('hidden');
   };
@@ -868,8 +957,8 @@ body, html {
       if (!img.src || img.naturalWidth < 50) return;
       img.style.cursor = 'pointer';
       img.style.transition = 'transform 0.2s, filter 0.2s';
-      img.addEventListener('mouseenter', () => { img.style.transform = 'scale(1.02)'; img.style.filter = 'brightness(1.05)'; });
-      img.addEventListener('mouseleave', () => { img.style.transform = 'scale(1)'; img.style.filter = ''; });
+      img.addEventListener('mouseenter', () => { img.style.transform = 'scale(1.02)'; });
+      img.addEventListener('mouseleave', () => { img.style.transform = 'scale(1)'; });
       img.addEventListener('click', (e) => {
         e.stopPropagation();
         modalImg.src = img.src;
@@ -889,7 +978,6 @@ body, html {
   }
 })();
 
-
 // ---- Hide logo on scroll logic ----
 const logo = document.querySelector('.logo');
 const deck = document.getElementById('deck');
@@ -897,13 +985,8 @@ let isScrolling;
 
 if (deck && logo) {
   deck.addEventListener('scroll', () => {
-    // 1. Add the hidden class as soon as scroll starts
     logo.classList.add('logo-hidden');
-
-    // 2. Clear the timeout if we are still scrolling
     window.clearTimeout(isScrolling);
-
-    // 3. Set a timeout to run after scrolling ends (250ms)
     isScrolling = setTimeout(() => {
       logo.classList.remove('logo-hidden');
     }, 250);
