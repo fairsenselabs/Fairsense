@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>WalletSense · Sovereign Financial Defense Grid | GTM Plan</title>
+   <style>
+    /* ----- RESET & BASE (strictly preserved from WalletSense) ----- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+ :root {
+  --ws-gold: #2F6BFF;
+  --ws-gold-light: #EAF1FF;
+  --ws-gold-mid: #7EA6FF;
+  --ws-ink: #0F172A;
+  --ws-muted: #475569;
+  --ws-surface: #F8FAFC;
+  --ws-border: #E2E8F0;
+  --ws-card: #FFFFFF;
+  --border-radius-lg: 16px;
+}
+
+    /* PROFESSIONAL FONT STACK — Inter for clarity, JetBrains Mono for technical precision */
+    body {
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: #ffffff;
+      color: var(--ws-ink);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .plan {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    /* ----- TYPOGRAPHY (professional, corporate-grade) ----- */
+    .cover-eyebrow {
+      font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      color: var(--ws-gold);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .cover-title {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 42px;
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 0.75rem;
+      color: var(--ws-ink);
+      letter-spacing: -0.02em;
+    }
+
+    .cover-title span {
+      color: var(--ws-gold);
+    }
+
+    .cover-sub {
+      font-size: 15px;
+      color: var(--ws-muted);
+      max-width: 560px;
+      line-height: 1.65;
+      margin-bottom: 1.5rem;
+      font-weight: 400;
+    }
+
+    .cover-meta {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .cover-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .cover-stat .label {
+      font-family: 'JetBrains Mono', 'SF Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ws-muted);
+    }
+
+    .cover-stat .val {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--ws-ink);
+    }
+
+    .cover-stat .val span {
+      font-size: 12px;
+      color: var(--ws-muted);
+      font-weight: 400;
+    }
+
+    .section {
+      margin-bottom: 3rem;
+    }
+
+    .section-label {
+      font-family: 'JetBrains Mono', 'SF Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ws-gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+      color: var(--ws-ink);
+      letter-spacing: -0.01em;
+    }
+
+    .callout {
+      background: var(--ws-gold-light);
+      border-left: 3px solid var(--ws-gold);
+      border-radius: 0;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .callout p {
+      font-size: 14px;
+      color: #633806;
+      line-height: 1.65;
+      font-weight: 450;
+    }
+
+    /* phase grid (3 columns on wide) */
+    .phase-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .phase-card {
+      background: var(--ws-card);
+      border: 0.5px solid var(--ws-border);
+      border-radius: var(--border-radius-lg);
+      padding: 1.25rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .phase-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+    }
+
+    .phase-card.p1::before { background: var(--ws-gold-mid); }
+    .phase-card.p2::before { background: #1D9E75; }
+    .phase-card.p3::before { background: #378ADD; }
+
+    .phase-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ws-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .phase-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--ws-ink);
+    }
+
+    .phase-range {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--ws-gold);
+      margin-bottom: 0.75rem;
+    }
+
+    .phase-body {
+      font-size: 13px;
+      color: var(--ws-muted);
+      line-height: 1.6;
+    }
+
+    .phase-target {
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 0.5px solid var(--ws-border);
+      font-size: 12px;
+      color: var(--ws-muted);
+    }
+
+    .phase-target strong {
+      color: var(--ws-ink);
+      font-weight: 600;
+    }
+
+    /* shield grid (seven cards) */
+    .shield-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .shield-card {
+      background: var(--ws-card);
+      border: 0.5px solid var(--ws-border);
+      border-radius: var(--border-radius-lg);
+      padding: 1rem 1.25rem;
+    }
+
+    .shield-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--ws-gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .shield-desc {
+      font-size: 12px;
+      color: var(--ws-muted);
+      line-height: 1.6;
+    }
+
+    /* table wrapper */
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin-bottom: 1.5rem;
+      border-radius: var(--border-radius-lg);
+    }
+
+    .client-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      min-width: 560px;
+    }
+
+    .client-table th {
+      text-align: left;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ws-muted);
+      padding: 0.5rem 0.75rem;
+      border-bottom: 0.5px solid var(--ws-border);
+    }
+
+    .client-table td {
+      padding: 0.75rem;
+      border-bottom: 0.5px solid var(--ws-border);
+      color: var(--ws-muted);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+
+    .client-table td:first-child {
+      color: var(--ws-ink);
+      font-weight: 500;
+    }
+
+    .tier-badge {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+
+    .tier-now { background: #EAF3DE; color: #3B6D11; }
+    .tier-6 { background: #FAEEDA; color: #633806; }
+    .tier-12 { background: #E6F1FB; color: #185FA5; }
+    .tier-24 { background: #F1EFE8; color: #5F5E5A; }
+
+    /* pricing grid */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .price-card {
+      background: var(--ws-card);
+      border: 0.5px solid var(--ws-border);
+      border-radius: var(--border-radius-lg);
+      padding: 1.25rem;
+    }
+
+    .price-card.featured {
+      border: 2px solid var(--ws-gold);
+    }
+
+    .price-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ws-ink);
+      margin-bottom: 0.25rem;
+    }
+
+    .price-amount {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--ws-gold);
+      margin-bottom: 0.25rem;
+      letter-spacing: -0.01em;
+    }
+
+    .price-unit {
+      font-size: 12px;
+      color: var(--ws-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .price-desc {
+      font-size: 12px;
+      color: var(--ws-muted);
+      line-height: 1.6;
+    }
+
+    /* moat row */
+    .moat-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1px;
+      background: var(--ws-border);
+      border: 0.5px solid var(--ws-border);
+      border-radius: var(--border-radius-lg);
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+
+    .moat-cell-head {
+      background: var(--ws-surface);
+      padding: 0.75rem 1.25rem;
+    }
+
+    .moat-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ws-muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .moat-val {
+      font-size: 13px;
+      color: var(--ws-ink);
+      font-weight: 600;
+    }
+
+    .moat-note {
+      font-size: 12px;
+      color: var(--ws-muted);
+      line-height: 1.5;
+      margin-top: 0.25rem;
+    }
+
+    /* competitor rows */
+    .competitor-row {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 0;
+      border-bottom: 0.5px solid var(--ws-border);
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .competitor-row:last-child {
+      border-bottom: none;
+    }
+
+    .comp-name {
+      font-size: 13px;
+      font-weight: 600;
+      min-width: 100px;
+      color: var(--ws-ink);
+    }
+
+    .comp-lane {
+      font-size: 12px;
+      color: var(--ws-muted);
+      flex: 1;
+      min-width: 180px;
+    }
+
+    .comp-gap {
+      font-size: 12px;
+      font-style: italic;
+      color: var(--ws-muted);
+    }
+
+    .gap-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--ws-gold);
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+
+    /* risk grid */
+    .risk-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .risk-card {
+      background: var(--ws-card);
+      border: 0.5px solid var(--ws-border);
+      border-radius: var(--border-radius-lg);
+      padding: 1rem 1.25rem;
+    }
+
+    .risk-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ws-ink);
+      margin-bottom: 0.4rem;
+    }
+
+    .risk-body {
+      font-size: 12px;
+      color: var(--ws-muted);
+      line-height: 1.6;
+    }
+
+    .divider {
+      border: none;
+      border-top: 0.5px solid var(--ws-border);
+      margin: 2rem 0;
+    }
+
+    .prose {
+      font-size: 14px;
+      color: var(--ws-muted);
+      line-height: 1.75;
+      margin-bottom: 1rem;
+    }
+
+    .prose strong {
+      color: var(--ws-ink);
+      font-weight: 600;
+    }
+
+    .footer-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1.5rem;
+      border-top: 0.5px solid var(--ws-border);
+      margin-top: 2rem;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .footer-bar span {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--ws-muted);
+      letter-spacing: 0.08em;
+    }
+
+    /* hierarchy table */
+    .mode-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      background: var(--ws-card);
+      border: 0.5px solid var(--ws-border);
+      border-radius: var(--border-radius-lg);
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+
+    .mode-table th, .mode-table td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border-bottom: 0.5px solid var(--ws-border);
+    }
+
+    .mode-table th {
+      background: var(--ws-surface);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--ws-muted);
+    }
+
+    /* responsive */
+    @media (max-width: 860px) {
+      .plan { padding: 1.75rem 1.25rem 3rem; }
+      .cover-title { font-size: 36px; }
+    }
+    @media (max-width: 780px) {
+      .phase-grid { grid-template-columns: repeat(2, 1fr); }
+      .moat-row { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 680px) {
+      .competitor-row { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+    }
+    @media (max-width: 600px) {
+      .phase-grid, .pricing-grid, .moat-row, .risk-grid { grid-template-columns: 1fr; }
+      .cover-title { font-size: 30px; }
+      .section-title { font-size: 20px; }
+    }
+    @media (max-width: 480px) {
+      .plan { padding: 1.25rem 1rem 2.5rem; }
+      .cover-title { font-size: 28px; }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<body>
+<div class="plan">
+
+  <div class="cover">
+    <div class="cover-eyebrow">Confidential · Go-to-Market Brief · April 2026</div>
+    <div class="cover-title">WalletSense<br><span>Sovereign Financial</span><br>Defense Grid</div>
+    <div class="cover-sub">A market entry plan for the institutional-grade behavioral biometrics + on-chain forensics platform — built around the only defensible white space in financial fraud detection.</div>
+    <div class="cover-meta">
+      <div class="cover-stat"><div class="label">Window</div><div class="val">18–24 <span>months</span></div></div>
+      <div class="cover-stat"><div class="label">Primary market</div><div class="val">SEA <span>crypto / neo-bank</span></div></div>
+      <div class="cover-stat"><div class="label">Core moat</div><div class="val">Web2/3 <span>signal fusion</span></div></div>
+      <div class="cover-stat"><div class="label">Entry model</div><div class="val">Zero <span>upfront pilot</span></div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">01 · The White Space</div>
+    <div class="section-title">Why the gap exists — and why it closes</div>
+    <div class="callout">
+      <p>BioCatch owns behavioral biometrics. Chainalysis owns on-chain forensics. Sardine owns device fingerprinting. None of them made the architectural decision early enough to score both Web2 behavioral signals and Web3 on-chain signals inside a single verdict engine. That gap is WalletSense's entire right to exist.</p>
+    </div>
+    <p class="prose">The incumbents are domain-native. Their data models, infrastructure, and sales motion reflect their founding lane. Merging those stacks now means breaking existing enterprise contracts. It's the innovator's dilemma — their depth is their constraint.</p>
+    <p class="prose">The hybrid attack patterns that exploit this gap are real and growing: a human passes biometric onboarding (invisible to BioCatch), then hands the session to an automation script at signing. Behavioral tools see a clean session. On-chain tools see a clean wallet. <strong>Neither sees the handoff. WalletSense does.</strong></p>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-label">02 · Go-to-Market Phases</div>
+    <div class="section-title">Three-phase entry — prove first, sell second</div>
+    <div class="phase-grid">
+      <div class="phase-card p1">
+        <div class="phase-num">Phase 01</div>
+        <div class="phase-title">Prove the Number</div>
+        <div class="phase-range">Months 1 – 12</div>
+        <div class="phase-body">Deploy in Silent Mode on crypto exchange and neo-bank onboarding funnels. Collect a performance fee on confirmed fraud. Generate SHA-256 signed evidence reports. This report becomes every future sales asset.</div>
+        <div class="phase-target"><strong>Target:</strong> Coinhako, Indodax, GXS, MariBank, ANEXT — MAS/OJK regulated, lean procurement, acute bot exposure.</div>
+      </div>
+      <div class="phase-card p2">
+        <div class="phase-num">Phase 02</div>
+        <div class="phase-title">Ride the Compliance Wave</div>
+        <div class="phase-range">Months 12 – 24</div>
+        <div class="phase-body">Reframe as a FATF Travel Rule compliance product. Banks don't buy "biometrics" — they buy court-ready forensic evidence. The evidence locker is the product. Fraud teams get what legal needs to freeze accounts.</div>
+        <div class="phase-target"><strong>Target:</strong> Regional banks in SG, ID, PH preparing for VAS Travel Rule enforcement deadlines.</div>
+      </div>
+      <div class="phase-card p3">
+        <div class="phase-num">Phase 03</div>
+        <div class="phase-title">Enter Tier-1 via the Side Door</div>
+        <div class="phase-range">Months 24 – 36</div>
+        <div class="phase-body">Tier-1 banks buy from existing vendors. The path in is OEM partnership — become a certified behavioral layer inside Temenos, Finastra, or Sumsub. Not competing with BioCatch; augmenting the stack that already has the bank relationship.</div>
+        <div class="phase-target"><strong>Target:</strong> Core banking platforms, KYC stacks, SIEM/SOAR vendors as distribution partners.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-label">03 · Client Segments</div>
+    <div class="section-title">Sequenced by procurement velocity, not prestige</div>
+    <div class="table-wrapper">
+      <table class="client-table">
+        <thead>
+          <tr><th>Segment</th><th>Tier</th><th>Why they buy</th><th>Entry point</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Crypto exchanges (SEA)</td><td><span class="tier-badge tier-now">Now</span></td><td>Bot drain on withdrawals and fake KYC volume — visible, measurable, urgent</td><td>Bot Bounty Pilot — zero upfront</td></tr>
+          <tr><td>Neo-banks (SG/ID/PH)</td><td><span class="tier-badge tier-now">Now</span></td><td>Onboarding fraud and synthetic identity rings, limited existing vendor contracts</td><td>Silent Mode + compliance report</td></tr>
+          <tr><td>Payment processors</td><td><span class="tier-badge tier-6">6 months</span></td><td>Chargeback fraud, card-not-present automation attacks</td><td>Titanium real-time scoring</td></tr>
+          <tr><td>Regional banks</td><td><span class="tier-badge tier-12">12 months</span></td><td>FATF/AML compliance, account takeover, regulator pressure</td><td>Forensic Audit product</td></tr>
+          <tr><td>Insurance companies</td><td><span class="tier-badge tier-12">12 months</span></td><td>Claims fraud, synthetic applicant detection</td><td>Graph Link Analysis module</td></tr>
+          <tr><td>Tier-1 banks (via partner)</td><td><span class="tier-badge tier-24">24–36 months</span></td><td>Enterprise fraud stack augmentation after pilot validation exists</td><td>OEM through existing platform vendor</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-label">04 · Pricing Architecture</div>
+    <div class="section-title">Aligned to how financial institutions actually buy</div>
+    <p class="prose" style="margin-bottom:1.25rem">The $500/seat/year model doesn't fit. Banks don't think in seats for fraud tooling. The structure below is built around how institutions budget, measure, and expand security spend.</p>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-name">Bot Bounty Pilot</div>
+        <div class="price-amount">10–15%</div>
+        <div class="price-unit">of confirmed fraud value intercepted (capped)</div>
+        <div class="price-desc">Zero upfront. Performance-based. Removes procurement risk entirely. Pilot contract signed, not a handshake — defines what "confirmed" means before deployment.</div>
+      </div>
+      <div class="price-card">
+        <div class="price-name">Transaction Scoring</div>
+        <div class="price-amount">$0.002–0.008</div>
+        <div class="price-unit">per scored transaction, tiered by volume</div>
+        <div class="price-desc">Scales with the client's growth. Aligns incentives — WalletSense only earns when transactions flow. Standard model for fraud-as-a-service vendors.</div>
+      </div>
+      <div class="price-card">
+        <div class="price-name">Forensic Audit Retainer</div>
+        <div class="price-amount">$5K–25K</div>
+        <div class="price-unit">per month, on-demand evidence generation</div>
+        <div class="price-desc">Sold to compliance and legal teams, not fraud ops. Budgeted as legal infrastructure. SHA-256 evidence lockers for account freezes and FIU reporting.</div>
+      </div>
+      <div class="price-card featured">
+        <div class="price-name">Bionium Enterprise License</div>
+        <div class="price-amount">$200K–800K</div>
+        <div class="price-unit">per year, unlimited scoring above transaction floor</div>
+        <div class="price-desc">Full Vibranium-class biological verification. Priced against AUM of institution. Replaces per-transaction model once volume justifies. This is the Tier-1 / Phase 3 product.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-label">05 · Competitive Position</div>
+    <div class="section-title">Where incumbents stop and WalletSense starts</div>
+    <div style="background:var(--ws-card);border:0.5px solid var(--ws-border);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin-bottom:1.5rem">
+      <div class="competitor-row"><div class="comp-name">BioCatch</div><div class="comp-lane">Behavioral biometrics, mouse/keystroke dynamics, session risk scoring</div><div class="comp-gap"><span class="gap-dot"></span>No on-chain signals. Web2 only.</div></div>
+      <div class="competitor-row"><div class="comp-name">Chainalysis</div><div class="comp-lane">Blockchain analytics, wallet taint tracing, sanctions screening</div><div class="comp-gap"><span class="gap-dot"></span>No session-layer behavior. Chain only.</div></div>
+      <div class="competitor-row"><div class="comp-name">Sardine</div><div class="comp-lane">Device fingerprinting, fraud signals for crypto/fintech onboarding</div><div class="comp-gap"><span class="gap-dot"></span>Moving toward chain but no fusion verdict.</div></div>
+      <div class="competitor-row"><div class="comp-name">Sumsub</div><div class="comp-lane">KYC/KYB identity verification, document checks, liveness</div><div class="comp-gap"><span class="gap-dot"></span>Identity at onboarding only. No continuous scoring.</div></div>
+      <div class="competitor-row"><div class="comp-name">WalletSense</div><div class="comp-lane">Behavioral + WebDriver + on-chain graph — single cross-domain verdict per transaction</div><div class="comp-gap" style="color:var(--ws-gold)">The only fused Web2/Web3 adjudicator.</div></div>
+    </div>
+    <p class="prose"><strong>Warning:</strong> Chainalysis acquired Alterya in late 2023 specifically to add behavioral signals. Sardine is moving toward on-chain. This gap closes in 18–24 months. The moat shifts from architecture to data — three years of cross-domain training data they cannot replicate through M&A.</p>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-label">06 · The Durable Moat</div>
+    <div class="section-title">What compounds over time</div>
+    <div class="moat-row">
+      <div class="moat-cell-head"><div class="moat-label">Now (architecture)</div><div class="moat-val">Fusion verdict</div><div class="moat-note">Only platform scoring Web2 behavior + on-chain graph in one engine</div></div>
+      <div class="moat-cell-head"><div class="moat-label">12 months (evidence)</div><div class="moat-val">Case library</div><div class="moat-note">Pilot results become court-referenced forensic precedents in SEA jurisdictions</div></div>
+      <div class="moat-cell-head"><div class="moat-label">36 months (data)</div><div class="moat-val">Cross-domain corpus</div><div class="moat-note">Years of labeled hybrid attack patterns. Unacquirable. Incumbents cannot buy it retroactively.</div></div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-label">07 · Pre-GTM Requirements</div>
+    <div class="section-title">What must be true before the first serious sales conversation</div>
+    <div class="risk-grid">
+      <div class="risk-card"><div class="risk-title">Benchmark report</div><div class="risk-body">Every technical buyer will run WalletSense against a labeled dataset — known bots vs. known humans. If false positive rate on legitimate human traffic exceeds ~3%, the product is dead regardless of true positive performance. BioCatch publishes theirs. Publish yours first.</div></div>
+      <div class="risk-card"><div class="risk-title">Legal definition of "confirmed fraud"</div><div class="risk-body">The Bot Bounty model lives or dies on this definition. Write it into every pilot contract before deployment. What counts as confirmed? Who adjudicates disputes? Without this, the performance fee model becomes a legal argument.</div></div>
+      <div class="risk-card"><div class="risk-title">MAS/PDPA compliance posture</div><div class="risk-body">Behavioral biometrics at 1,000Hz generates biometric data under PDPA. Singapore clients need a clear DPA, data residency answer, and retention policy before procurement will sign. This is not optional — it's a blocker for every regulated institution.</div></div>
+      <div class="risk-card"><div class="risk-title">Language audit on all materials</div><div class="risk-body">"Mathematically final proof" and "laws of physics" will be challenged by any technical due diligence team. Strip the marketing superlatives. Replace with tested accuracy metrics and confidence intervals. The underlying capability is strong — it doesn't need amplification.</div></div>
+    </div>
+  </div>
+
+  <div class="footer-bar">
+    <span>WalletSense · Sovereign Security Suite</span>
+    <span>G · April 2026</span>
+  </div>
+</div>
+</body>
+</html>
