@@ -106,6 +106,18 @@ body, html {
   transition: all 0.2s;
 }
 
+.slide-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('https://stage.ogsalliance.com/images/d6.jpg');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.15;
+  filter: blur(1px) brightness(0.6);
+  pointer-events: none;
+  z-index: 0;
+}
+
 /* staggered crash-in for each card */
 .news-card:nth-child(1) { animation: cardCrash 0.5s 4.4s ease-out forwards; }
 .news-card:nth-child(2) { animation: cardCrash 0.5s 4.8s ease-out forwards; }
@@ -287,6 +299,18 @@ body, html {
 .metric-lbl {
   font-family:'DM Sans', sans-serif; font-size:0.65rem;
   letter-spacing:0.1em; text-transform:uppercase; color:var(--muted);
+}
+
+.slide-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('https://stage.ogsalliance.com/images/d6.jpg');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.15;
+  filter: blur(1px) brightness(0.6);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .logo img {
@@ -509,6 +533,10 @@ body, html {
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    MOBILE
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+
+
+
 @media (max-width:768px) {
   .slide.layout-split,
   .slide.layout-right { grid-template-columns:1fr; overflow-y:auto; }
@@ -522,6 +550,9 @@ body, html {
   .ans-proof { flex-direction:column; gap:1.2rem; }
   .logo img { height: 48px; }
   .logo { top: 1rem; left: 1rem; }
+  .slide-visual img[src*="d7.png"] {
+    width: 90px !important;
+  }
 }
 
 /* Skip button */
@@ -630,6 +661,7 @@ body, html {
 
 <!-- ─── S1: THE PROBLEM ─── -->
 <section class="slide layout-split" id="s1">
+
   <div class="bg-grid"></div>
   <div class="slide-text">
     <div class="tag">The $20 Billion Problem</div>
@@ -723,16 +755,9 @@ body, html {
   <div class="slide-visual" style="flex-direction:column;align-items:stretch;padding-right:7vw;gap:0.8rem;">
     <div style="max-width:345px;width:100%;">
       <div class="proof-terminal">
-        <div class="t-bar"><div class="tdot live"></div><span>CasinoSense v4.2 · Live Detection Feed</span></div>
-        <div class="t-body">
-          <div class="t-row hdr"><span>Session</span><span>Signal</span><span>ApEn</span><span>Bot%</span><span>Action</span></div>
-          <div class="t-row"><span style="color:var(--muted);font-size:.6rem">7A2F-E019</span><span style="color:var(--red);font-size:.65rem">SYNTHETIC</span><span style="color:var(--red)">0.02</span><span style="color:var(--red);font-size:.62rem">99.8%</span><span style="color:var(--red);font-weight:700;font-size:.62rem">BLOCKED</span></div>
-          <div class="t-row"><span style="color:var(--muted);font-size:.6rem">B91C-44D0</span><span style="color:var(--green);font-size:.65rem">HUMAN</span><span style="color:var(--green)">0.81</span><span style="color:var(--green);font-size:.62rem">0.2%</span><span style="color:var(--green);font-size:.62rem">PASS</span></div>
-          <div class="t-row"><span style="color:var(--muted);font-size:.6rem">C3F8-7A11</span><span style="color:var(--red);font-size:.65rem">SYNTHETIC</span><span style="color:var(--red)">0.01</span><span style="color:var(--red);font-size:.62rem">99.9%</span><span style="color:var(--red);font-weight:700;font-size:.62rem">BLOCKED</span></div>
-          <div class="t-row"><span style="color:var(--muted);font-size:.6rem">D27A-990F</span><span style="color:var(--red);font-size:.65rem">SYNTHETIC</span><span style="color:var(--red)">0.03</span><span style="color:var(--red);font-size:.62rem">98.7%</span><span style="color:var(--red);font-weight:700;font-size:.62rem">BLOCKED</span></div>
-          <div class="t-row"><span style="color:var(--muted);font-size:.6rem">E55B-1C3A</span><span style="color:var(--green);font-size:.65rem">HUMAN</span><span style="color:var(--green)">0.77</span><span style="color:var(--green);font-size:.62rem">0.5%</span><span style="color:var(--green);font-size:.62rem">PASS</span></div>
-        </div>
-      </div>
+  <div class="t-bar"><div class="tdot live"></div><span>FSHIVE · Live Sovereign Feed</span></div>
+  <img src="https://stage.ogsalliance.com/images/d3.png" style="width:100%; border-radius:0 0 8px 8px;">
+</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--accent-border);border:1px solid var(--accent-border);margin-top:0.85rem;">
         <div style="background:var(--bg);padding:0.85rem 1rem;text-align:center;">
           <div style="font-family:'JetBrains Mono',monospace;font-size:1.45rem;color:var(--white);font-weight:700;margin-bottom:0.2rem;">7,200+</div>
@@ -768,6 +793,8 @@ body, html {
         <div class="orbit-dot"></div>
         <div><div class="vval">245TB</div><div class="vlbl">NVMe Gen 5 Vault</div></div>
       </div>
+      
+     
       <div>
         <div class="vault-stat"><span class="vskey">Evidence Format</span><span class="vsval">SHA-256 · Zero PII</span></div>
         <div class="vault-stat"><span class="vskey">Jurisdiction</span><span class="vsval">On-Premise · Client</span></div>
@@ -775,6 +802,25 @@ body, html {
         <div class="vault-stat"><span class="vskey">IP Status</span><span class="vsval">Patent Pending · 5 Markets</span></div>
         <div class="vault-stat"><span class="vskey">Strategic Buyers</span><span class="vsval">Visa · AWS · CrowdStrike · CSA</span></div>
       </div>
+      
+      
+       <!-- add this small hardware badge -->
+<div class="hardware-badge" style="text-align:center; margin-top:0.5rem;">
+  <span class="hz-badge" style="cursor:pointer;color: #5CFF0F;font-size:0.85rem;" onclick="toggleHardware()">⚙️ Tap Here: FS Sovereign Hardware</span>
+  <div id="hardware-detail" style="display:none; margin-top:0.5rem;">
+    <img src="https://stage.ogsalliance.com/images/d2.png" style="max-width:100%; border-radius:8px; border:1px solid var(--accent-border);">
+    <p style="font-size:0.65rem; color:var(--muted); margin-top:0.3rem;">FS-Hive Ultimate · Threadripper Pro · H200 NVL</p>
+  </div>
+</div>
+<script>
+function toggleHardware() {
+  const el = document.getElementById('hardware-detail');
+  el.style.display = el.style.display === 'none' ? 'block' : 'none';
+}
+</script>
+      
+      
+      
     </div>
   </div>
 </section>
@@ -843,7 +889,16 @@ body, html {
           <span style="color:var(--muted);">Result</span><span style="color:var(--green);font-weight:700;">Zero data exfiltrated · Cloud firewall updated</span>
         </div>
       </div>
-
+<div style="display:flex; gap:1rem; margin-top:1rem;">
+ <img src="https://stage.ogsalliance.com/images/d7.png" 
+     style="width:120px; border-radius:6px; border:1px solid var(--accent-border); transition: transform 0.2s; cursor: pointer;"
+     onmouseover="this.style.transform='scale(1.02)'"
+     onmouseout="this.style.transform='scale(1)'"
+     title="Click to expand – WalletSense DeFi demo">
+ <div style="font-size:0.65rem; color:var(--muted); letter-spacing:0.05em; margin-top:0.3rem;">
+  WalletSense Demo: Real‑time bot detection in a DeFi wrapper.
+</div>
+</div>
     </div>
   </div>
 </section>
@@ -884,6 +939,25 @@ body, html {
         <div style="font-family:'DM Sans',sans-serif;font-size:0.76rem;color:var(--body);line-height:1.6;">FairSense 2026 ≈ Palantir 2008. Niche beachhead. Proprietary data moat. Mission-critical for clients who cannot exist without us.</div>
       </div>
     </div>
+  </div>
+</section>
+
+
+<!-- ─── S7: CLOSING SLIDE – Sovereign Seal ─── -->
+<section class="slide" id="s7" style="display: flex; align-items: center; justify-content: center; text-align: center; background: var(--bg);">
+  <div class="bg-grid"></div>
+  <div style="max-width:800px; margin: 0 auto;">
+    <img src="https://stage.ogsalliance.com/images/d5.png" 
+         alt="FairSense Sovereign Lab" 
+         style="width: 80%; margin-bottom: 2rem; opacity: 0.9; filter: drop-shadow(0 0 10px rgba(157,184,202,0.3));">
+    <h2 style="font-family: 'Rajdhani', sans-serif; font-size: 2rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1rem;">
+      Sovereign Intelligence<br>for the Digital Age
+    </h2>
+    <div style="width: 60px; height: 2px; background: var(--accent); margin: 1.5rem auto;"></div>
+    <p style="color: var(--body); font-size: 0.9rem; max-width: 400px; margin: 0 auto;">
+      FairSense Labs · est. 2024<br>
+      Singapore · ASEAN
+    </p>
   </div>
 </section>
 
