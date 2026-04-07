@@ -255,6 +255,38 @@
 
     /* ---- Footer ---- */
     footer { border-top: 1px solid var(--divider); color: var(--text-muted); }
+
+
+
+
+    /* ===================== PRINT FORCE REPAIR ===================== */
+    @media print {
+      body {
+        background-color: #e9ecf2 !important; /* Forces Light Theme background */
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      .glow-sphere { display: none; } /* Removes blurry background blobs for clarity */
+      .glass-panel, .card {
+        background-color: rgba(255, 255, 255, 0.8) !important;
+        backdrop-filter: none !important; /* Browsers can't print blur */
+        border: 1px solid rgba(0, 0, 0, 0.1) !important;
+      }
+      .luminous-rim::after {
+        opacity: 0.5 !important; /* Softens the rim for paper */
+      }
+      .gt-primary, .gt-secondary, .gt-heading, .gt-section {
+        background: none !important;
+        -webkit-text-fill-color: initial !important;
+        color: #5b21b6 !important; /* Forces a solid, readable violet for headers */
+      }
+      header, #themeToggle, .material-symbols-outlined, input[type=range] {
+        display: none !important; /* Hides web buttons/sliders on paper */
+      }
+      main { padding-top: 0 !important; }
+      details[open] summary ~ * { display: block !important; }
+      summary { list-style: none !important; }
+    }
   </style>
 </head>
 <body class="font-body">
