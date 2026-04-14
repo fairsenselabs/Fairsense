@@ -1,751 +1,379 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html class="dark" lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>CasinoSense · Sovereign iGaming Defense Grid | GTM Plan</title>
-  <style>
-    /* ----- RESET & BASE (strictly preserved from WalletSense) ----- */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
- :root {
-  --ws-gold: #2F6BFF;
-  --ws-gold-light: #EAF1FF;
-  --ws-gold-mid: #7EA6FF;
-  --ws-ink: #0F172A;
-  --ws-muted: #475569;
-  --ws-surface: #F8FAFC;
-  --ws-border: #E2E8F0;
-  --ws-card: #FFFFFF;
-  --border-radius-lg: 16px;
-}
-
-    /* PROFESSIONAL FONT STACK — Inter for clarity, JetBrains Mono for technical precision */
-    body {
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      background: #ffffff;
-      color: var(--ws-ink);
-      line-height: 1.5;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    .plan {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 2rem 1.5rem 4rem;
-    }
-
-    /* ----- TYPOGRAPHY (professional, corporate-grade) ----- */
-    .cover-eyebrow {
-      font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
-      font-size: 11px;
-      letter-spacing: 0.12em;
-      color: var(--ws-gold);
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
-
-    .cover-title {
-      font-family: 'Inter', system-ui, sans-serif;
-      font-size: 42px;
-      font-weight: 700;
-      line-height: 1.1;
-      margin-bottom: 0.75rem;
-      color: var(--ws-ink);
-      letter-spacing: -0.02em;
-    }
-
-    .cover-title span {
-      color: var(--ws-gold);
-    }
-
-    .cover-sub {
-      font-size: 15px;
-      color: var(--ws-muted);
-      max-width: 560px;
-      line-height: 1.65;
-      margin-bottom: 1.5rem;
-      font-weight: 400;
-    }
-
-    .cover-meta {
-      display: flex;
-      gap: 2rem;
-      flex-wrap: wrap;
-    }
-
-    .cover-stat {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-
-    .cover-stat .label {
-      font-family: 'JetBrains Mono', 'SF Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ws-muted);
-    }
-
-    .cover-stat .val {
-      font-size: 20px;
-      font-weight: 600;
-      color: var(--ws-ink);
-    }
-
-    .cover-stat .val span {
-      font-size: 12px;
-      color: var(--ws-muted);
-      font-weight: 400;
-    }
-
-    .section {
-      margin-bottom: 3rem;
-    }
-
-    .section-label {
-      font-family: 'JetBrains Mono', 'SF Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--ws-gold);
-      margin-bottom: 0.5rem;
-    }
-
-    .section-title {
-      font-family: 'Inter', system-ui, sans-serif;
-      font-size: 22px;
-      font-weight: 600;
-      margin-bottom: 1.25rem;
-      color: var(--ws-ink);
-      letter-spacing: -0.01em;
-    }
-
-    .callout {
-      background: var(--ws-gold-light);
-      border-left: 3px solid var(--ws-gold);
-      border-radius: 0;
-      padding: 1rem 1.25rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .callout p {
-      font-size: 14px;
-      color: #633806;
-      line-height: 1.65;
-      font-weight: 450;
-    }
-
-    /* phase grid (3 columns on wide) */
-    .phase-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .phase-card {
-      background: var(--ws-card);
-      border: 0.5px solid var(--ws-border);
-      border-radius: var(--border-radius-lg);
-      padding: 1.25rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .phase-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-    }
-
-    .phase-card.p1::before { background: var(--ws-gold-mid); }
-    .phase-card.p2::before { background: #1D9E75; }
-    .phase-card.p3::before { background: #378ADD; }
-
-    .phase-num {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ws-muted);
-      margin-bottom: 0.4rem;
-    }
-
-    .phase-title {
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: var(--ws-ink);
-    }
-
-    .phase-range {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      color: var(--ws-gold);
-      margin-bottom: 0.75rem;
-    }
-
-    .phase-body {
-      font-size: 13px;
-      color: var(--ws-muted);
-      line-height: 1.6;
-    }
-
-    .phase-target {
-      margin-top: 0.75rem;
-      padding-top: 0.75rem;
-      border-top: 0.5px solid var(--ws-border);
-      font-size: 12px;
-      color: var(--ws-muted);
-    }
-
-    .phase-target strong {
-      color: var(--ws-ink);
-      font-weight: 600;
-    }
-
-    /* shield grid (seven cards) */
-    .shield-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .shield-card {
-      background: var(--ws-card);
-      border: 0.5px solid var(--ws-border);
-      border-radius: var(--border-radius-lg);
-      padding: 1rem 1.25rem;
-    }
-
-    .shield-title {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--ws-gold);
-      margin-bottom: 0.5rem;
-    }
-
-    .shield-desc {
-      font-size: 12px;
-      color: var(--ws-muted);
-      line-height: 1.6;
-    }
-
-    /* table wrapper */
-    .table-wrapper {
-      width: 100%;
-      overflow-x: auto;
-      margin-bottom: 1.5rem;
-      border-radius: var(--border-radius-lg);
-    }
-
-    .client-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13px;
-      min-width: 560px;
-    }
-
-    .client-table th {
-      text-align: left;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ws-muted);
-      padding: 0.5rem 0.75rem;
-      border-bottom: 0.5px solid var(--ws-border);
-    }
-
-    .client-table td {
-      padding: 0.75rem;
-      border-bottom: 0.5px solid var(--ws-border);
-      color: var(--ws-muted);
-      vertical-align: top;
-      line-height: 1.5;
-    }
-
-    .client-table td:first-child {
-      color: var(--ws-ink);
-      font-weight: 500;
-    }
-
-    .tier-badge {
-      display: inline-block;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      padding: 2px 8px;
-      border-radius: 4px;
-      letter-spacing: 0.08em;
-      white-space: nowrap;
-    }
-
-    .tier-now { background: #EAF3DE; color: #3B6D11; }
-    .tier-6 { background: #FAEEDA; color: #633806; }
-    .tier-12 { background: #E6F1FB; color: #185FA5; }
-    .tier-24 { background: #F1EFE8; color: #5F5E5A; }
-
-    /* pricing grid */
-    .pricing-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .price-card {
-      background: var(--ws-card);
-      border: 0.5px solid var(--ws-border);
-      border-radius: var(--border-radius-lg);
-      padding: 1.25rem;
-    }
-
-    .price-card.featured {
-      border: 2px solid var(--ws-gold);
-    }
-
-    .price-name {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--ws-ink);
-      margin-bottom: 0.25rem;
-    }
-
-    .price-amount {
-      font-family: 'Inter', system-ui, sans-serif;
-      font-size: 24px;
-      font-weight: 700;
-      color: var(--ws-gold);
-      margin-bottom: 0.25rem;
-      letter-spacing: -0.01em;
-    }
-
-    .price-unit {
-      font-size: 12px;
-      color: var(--ws-muted);
-      margin-bottom: 0.75rem;
-    }
-
-    .price-desc {
-      font-size: 12px;
-      color: var(--ws-muted);
-      line-height: 1.6;
-    }
-
-    /* moat row */
-    .moat-row {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 1px;
-      background: var(--ws-border);
-      border: 0.5px solid var(--ws-border);
-      border-radius: var(--border-radius-lg);
-      overflow: hidden;
-      margin-bottom: 1.5rem;
-    }
-
-    .moat-cell-head {
-      background: var(--ws-surface);
-      padding: 0.75rem 1.25rem;
-    }
-
-    .moat-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ws-muted);
-      margin-bottom: 0.25rem;
-    }
-
-    .moat-val {
-      font-size: 13px;
-      color: var(--ws-ink);
-      font-weight: 600;
-    }
-
-    .moat-note {
-      font-size: 12px;
-      color: var(--ws-muted);
-      line-height: 1.5;
-      margin-top: 0.25rem;
-    }
-
-    /* competitor rows */
-    .competitor-row {
-      display: flex;
-      align-items: center;
-      padding: 0.75rem 0;
-      border-bottom: 0.5px solid var(--ws-border);
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .competitor-row:last-child {
-      border-bottom: none;
-    }
-
-    .comp-name {
-      font-size: 13px;
-      font-weight: 600;
-      min-width: 100px;
-      color: var(--ws-ink);
-    }
-
-    .comp-lane {
-      font-size: 12px;
-      color: var(--ws-muted);
-      flex: 1;
-      min-width: 180px;
-    }
-
-    .comp-gap {
-      font-size: 12px;
-      font-style: italic;
-      color: var(--ws-muted);
-    }
-
-    .gap-dot {
-      display: inline-block;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--ws-gold);
-      margin-right: 6px;
-      vertical-align: middle;
-    }
-
-    /* risk grid */
-    .risk-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1rem;
-    }
-
-    .risk-card {
-      background: var(--ws-card);
-      border: 0.5px solid var(--ws-border);
-      border-radius: var(--border-radius-lg);
-      padding: 1rem 1.25rem;
-    }
-
-    .risk-title {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--ws-ink);
-      margin-bottom: 0.4rem;
-    }
-
-    .risk-body {
-      font-size: 12px;
-      color: var(--ws-muted);
-      line-height: 1.6;
-    }
-
-    .divider {
-      border: none;
-      border-top: 0.5px solid var(--ws-border);
-      margin: 2rem 0;
-    }
-
-    .prose {
-      font-size: 14px;
-      color: var(--ws-muted);
-      line-height: 1.75;
-      margin-bottom: 1rem;
-    }
-
-    .prose strong {
-      color: var(--ws-ink);
-      font-weight: 600;
-    }
-
-    .footer-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-top: 1.5rem;
-      border-top: 0.5px solid var(--ws-border);
-      margin-top: 2rem;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-    }
-
-    .footer-bar span {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      color: var(--ws-muted);
-      letter-spacing: 0.08em;
-    }
-
-    /* hierarchy table */
-    .mode-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 12px;
-      background: var(--ws-card);
-      border: 0.5px solid var(--ws-border);
-      border-radius: var(--border-radius-lg);
-      overflow: hidden;
-      margin-bottom: 1.5rem;
-    }
-
-    .mode-table th, .mode-table td {
-      padding: 0.75rem 1rem;
-      text-align: left;
-      border-bottom: 0.5px solid var(--ws-border);
-    }
-
-    .mode-table th {
-      background: var(--ws-surface);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.1em;
-      color: var(--ws-muted);
-    }
-
-    /* responsive */
-    @media (max-width: 860px) {
-      .plan { padding: 1.75rem 1.25rem 3rem; }
-      .cover-title { font-size: 36px; }
-    }
-    @media (max-width: 780px) {
-      .phase-grid { grid-template-columns: repeat(2, 1fr); }
-      .moat-row { grid-template-columns: repeat(3, 1fr); }
-    }
-    @media (max-width: 680px) {
-      .competitor-row { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
-    }
-    @media (max-width: 600px) {
-      .phase-grid, .pricing-grid, .moat-row, .risk-grid { grid-template-columns: 1fr; }
-      .cover-title { font-size: 30px; }
-      .section-title { font-size: 20px; }
-    }
-    @media (max-width: 480px) {
-      .plan { padding: 1.25rem 1rem 2.5rem; }
-      .cover-title { font-size: 28px; }
-    }
-  </style>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>CASINOSENSE // BEHAVIORAL AI</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;family=Roboto+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+        }
+        .scanline {
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(0deg, rgba(0, 255, 65, 0) 0%, rgba(0, 255, 65, 0.05) 50%, rgba(0, 255, 65, 0) 100%);
+            position: absolute;
+            pointer-events: none;
+            z-index: 5;
+            animation: scanMove 3s linear infinite;
+            opacity: 0.4;
+        }
+        @keyframes scanMove {
+            0% { top: 0%; }
+            100% { top: 100%; }
+        }
+        .blink-red {
+            animation: pulseRed 1.2s ease-in-out infinite;
+        }
+        @keyframes pulseRed {
+            0%, 100% { opacity: 1; background-color: #FF3131; }
+            50% { opacity: 0.4; background-color: #FF3131; }
+        }
+        .ticker-scroll {
+            white-space: nowrap;
+            animation: scrollTicker 20s linear infinite;
+            display: inline-block;
+        }
+        @keyframes scrollTicker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        .fade-up {
+            animation: fadeUp 0.6s ease both;
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.25s; }
+        .delay-300 { animation-delay: 0.4s; }
+        .delay-400 { animation-delay: 0.55s; }
+        .delay-500 { animation-delay: 0.7s; }
+        .delay-600 { animation-delay: 0.85s; }
+        .delay-700 { animation-delay: 1.0s; }
+        .liquid-glass {
+            background: rgba(50, 54, 48, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(59, 75, 55, 0.35);
+        }
+        .glow-text-green {
+            text-shadow: 0 0 10px rgba(0, 255, 65, 0.6);
+        }
+        body {
+            background-color: #101410;
+            color: #e0e4db;
+            font-family: 'Inter', sans-serif;
+        }
+        .font-mono-custom { font-family: 'Roboto Mono', monospace; }
+        .font-headline { font-family: 'Space Grotesk', sans-serif; }
+        .threat-dot-red { background-color: #FF3131; box-shadow: 0 0 6px #FF3131; }
+        .threat-dot-amber { background-color: #EF9F27; box-shadow: 0 0 4px #EF9F27; }
+    </style>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        danger: "#FF3131",
+                        "primary-container": "#00ff41",
+                        "on-primary-container": "#003907",
+                        "surface-container": "#1c211c",
+                        "surface-container-high": "#272b26",
+                        "surface-container-lowest": "#0b0f0b",
+                        "on-surface-variant": "#b9ccb2",
+                        outline: "#84967e",
+                        "outline-variant": "#3b4b37",
+                        primary: "#ebffe2",
+                        secondary: "#6ede69"
+                    },
+                    fontFamily: {
+                        headline: ["Space Grotesk"],
+                        body: ["Inter"],
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body>
-<div class="plan">
+<body class="overflow-x-hidden selection:bg-primary-container/30 selection:text-black">
 
-  <div class="cover">
-    <div class="cover-eyebrow">Confidential · Go-to-Market Brief · April 2026</div>
-    <div class="cover-title">CasinoSense<br><span>Sovereign iGaming</span><br>Defense Grid</div>
-    <div class="cover-sub">A market entry plan for the institutional‑grade behavioral biometrics + fraud detection platform — purpose‑built for the unique physics of online casino gaming. Over 30+ Tier‑1 ASEAN casinos already in Gold Mode.</div>
-    <div class="cover-meta">
-      <div class="cover-stat"><div class="label">Window</div><div class="val">18–24 <span>months</span></div></div>
-      <div class="cover-stat"><div class="label">Primary market</div><div class="val">ASEAN <span>iGaming operators</span></div></div>
-      <div class="cover-stat"><div class="label">Core moat</div><div class="val">Seven‑shield <span>fusion verdict</span></div></div>
-      <div class="cover-stat"><div class="label">Entry model</div><div class="val">Zero <span>upfront pilot</span></div></div>
-    </div>
-  </div>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-[100] flex justify-between items-center px-6 md:px-8 h-16 bg-[#101410]/90 backdrop-blur-2xl border-b border-green-900/30 shadow-[0_0_20px_rgba(0,255,65,0.08)]">
+        <div class="flex items-center gap-6">
+            <span class="text-2xl font-bold tracking-tighter text-green-400 drop-shadow-[0_0_12px_rgba(0,255,65,0.5)] font-headline">CASINOSENSE</span>
+            <div class="hidden md:flex gap-6">
+                <a class="font-headline tracking-tight text-xs uppercase text-green-400 border-b border-green-400 pb-1" href="#">Threat_Feed</a>
+                <a class="font-headline tracking-tight text-xs uppercase text-zinc-400 hover:text-green-300 transition-colors" href="#">Telegram_Ops</a>
+                <a class="font-headline tracking-tight text-xs uppercase text-zinc-400 hover:text-green-300 transition-colors" href="#">AI_Engine</a>
+            </div>
+        </div>
+        <div class="flex items-center gap-4">
+            <span class="material-symbols-outlined text-green-400/60 hover:text-green-400 cursor-pointer">terminal</span>
+            <button class="bg-primary-container text-on-primary-container px-5 py-1.5 rounded text-[11px] font-headline font-bold uppercase tracking-widest hover:shadow-[0_0_18px_rgba(0,255,65,0.5)] transition-all">Deploy AI</button>
+        </div>
+    </nav>
 
-  <!-- 01 · Crisis & White Space -->
-  <div class="section">
-    <div class="section-label">01 · The Crisis & White Space</div>
-    <div class="section-title">Why the gap exists — and why only CasinoSense closes it</div>
-    <div class="callout">
-      <p>Global iGaming market to reach $153.6B by 2030. SEA iGaming alone grows at 21% CAGR to $8.3B by 2034. 7.6% of all online casino bets are linked to fraud — losses exceed $2.8B annually in the US alone, and fraud rose 64% in 2024. Attackers now deploy AI‑enhanced schemes as the norm: synthetic identities, deepfakes, coordinated mule networks. Traditional defenses fail.</p>
-    </div>
-    <p class="prose">Incumbents have deep domain expertise in their lanes. BioCatch owns behavioral biometrics, Sumsub owns onboarding, SEON owns device signals. None of them made the architectural decision to score both Web2 behavioral signals and iGaming‑specific abuse patterns inside a single verdict engine. That gap is CasinoSense's entire right to exist.</p>
-    <p class="prose">The hybrid attack pattern that exploits this gap is real and growing: a human passes biometric onboarding, then hands the session to an automation script at the live table. Behavioral tools see a clean session. Transaction monitors see legitimate bets. Neither sees the handoff. <strong>CasinoSense does.</strong></p>
-  </div>
+    <main class="relative pt-16">
+        <!-- Hero Section (CasinoSense + Obscura style) -->
+        <section class="relative min-h-[90vh] flex flex-col items-center justify-center px-6 overflow-hidden">
+            <div class="absolute inset-0 z-0 opacity-20 pointer-events-none">
+                <img class="w-full h-full object-cover grayscale brightness-50" alt="digital threat matrix" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_yUYhtoiF_FSDdxRW-3SKZYOOl2kmD-EzkFNz5UvIAjvsQgK1DWF6yWpmC6srLv6E0raD10j1iB4c8hF0zjW-F2EwWjBdty9pCYqmwkU-A6XTQl6aIAvF2nHF8ZeKFriLNG2r_31INgaEbRb8EDQRT2iBfZyOFkf77Tm5HKXaGwsX89t_ruj6add-gYbhnxlJwBqCHXqWqVfwrsw_8dQXzzRM4IlD-WcbLiusTxOVeK75UPMLIG3DB0HXvEJW_LzhFGYPsW-axNM"/>
+                <div class="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent"></div>
+            </div>
+            <div class="scanline top-1/4"></div>
+            <div class="relative z-10 max-w-5xl w-full text-center space-y-7">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-green-400/10 border border-green-400/30 rounded-full fade-up delay-100">
+                    <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+                    <span class="text-[10px] font-mono-custom uppercase tracking-[0.2em] text-green-400">BEHAVIORAL AI · ACTIVE</span>
+                </div>
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-headline font-bold tracking-tighter leading-[1.05] text-primary glow-text-green fade-up delay-200">
+                    Bots are stealing<br>from you. <span class="text-primary-container">Right now.</span>
+                </h1>
+                <!-- REPLACED hero paragraph (increase pressure) -->
+                <p class="max-w-2xl mx-auto text-on-surface-variant text-base md:text-lg font-light fade-up delay-300">
+                    Most operators think fraud is small. It isn’t.<br>  
+                    It’s hiding inside your bonuses, your affiliates, and your “normal” players.
+                </p>
+                <div class="flex flex-wrap justify-center gap-3 pt-2 fade-up delay-400">
+                    <span class="pill bg-green-400/10 border border-green-400/40 text-green-300 text-[11px] font-bold px-4 py-1.5 rounded-full">AI-POWERED</span>
+                    <span class="pill bg-danger/10 border border-danger/40 text-danger text-[11px] font-bold px-4 py-1.5 rounded-full">ZERO BOTS TOLERATED</span>
+                    <span class="pill bg-primary-container/20 border border-primary-container/40 text-primary-container text-[11px] font-bold px-4 py-1.5 rounded-full">60-SECOND SETUP</span>
+                </div>
+            </div>
+            <!-- Alert ticker from original -->
+            <div id="alert-ticker" class="absolute bottom-0 left-0 right-0 bg-danger/90 backdrop-blur-sm py-2.5 px-6 flex items-center gap-3 overflow-hidden border-t border-danger/50">
+                <div class="blink-red w-2.5 h-2.5 rounded-full bg-danger shadow-[0_0_8px_#FF3131]"></div>
+                <div class="overflow-hidden whitespace-nowrap flex-1">
+                    <div class="ticker-scroll font-mono-custom text-[11px] font-bold text-white tracking-wide">🔴 LIVE — Bot neutralized: account #4821 · Wash-bet ring detected: 3 accounts · Bonus abuse blocked: $340 saved · Syndicate flagged: 7 linked devices · Bot neutralized: account #9034 · +$12.4k reclaimed this week ·</div>
+                </div>
+            </div>
+        </section>
 
-  <hr class="divider">
+        <!-- NEW SECTION: HIDDEN LOSS (inserted after hero) -->
+        <section class="py-20 px-6 max-w-5xl mx-auto text-center">
+            <div class="fade-up delay-100">
+                <div class="text-[11px] font-mono-custom text-green-400 tracking-[0.2em] mb-2">HIDDEN LOSS</div>
+                <h2 class="text-3xl md:text-4xl font-headline font-bold text-primary mb-6">
+                    You’re not losing 5%. You’re just seeing 5%.
+                </h2>
+                <p class="text-on-surface-variant max-w-2xl mx-auto mb-10">
+                    Fraud isn’t obvious anymore. It behaves like real players, hides in affiliate traffic, and looks like normal bonus usage.
+                </p>
+                <div class="grid md:grid-cols-3 gap-6 text-left">
+                    <div class="liquid-glass p-6 rounded-xl border border-danger/30">
+                        <p class="text-danger font-bold text-sm mb-2">What you see</p>
+                        <p class="text-2xl font-bold text-primary">3–5%</p>
+                        <p class="text-xs text-on-surface-variant">Detected abuse</p>
+                    </div>
+                    <div class="liquid-glass p-6 rounded-xl border border-amber-400/30">
+                        <p class="text-amber-400 font-bold text-sm mb-2">What’s actually happening</p>
+                        <p class="text-2xl font-bold text-primary">15–35%</p>
+                        <p class="text-xs text-on-surface-variant">Hidden extraction</p>
+                    </div>
+                    <div class="liquid-glass p-6 rounded-xl border border-primary-container/40">
+                        <p class="text-primary-container font-bold text-sm mb-2">What it means</p>
+                        <p class="text-2xl font-bold text-primary">$50K–$300K+</p>
+                        <p class="text-xs text-on-surface-variant">Lost monthly</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-  <!-- 02 · The Seven Shields -->
-  <div class="section">
-    <div class="section-label">02 · The Seven Shields</div>
-    <div class="section-title">Seven specialized detection modules — one verdict engine</div>
-    <div class="shield-grid">
-      <div class="shield-card"><div class="shield-title">Biological Jitter Detection</div><div class="shield-desc">Measures acceleration, micro‑tremors, dwell time. Movement too smooth → synthetic. 1,000Hz interpolation captures human skeletal tremor.</div></div>
-      <div class="shield-card"><div class="shield-title">API & Headless Browser Detection</div><div class="shield-desc">TLS fingerprinting (JA3), WebDriver inconsistencies. Catches “Sniper” scripts before they place a bet.</div></div>
-      <div class="shield-card"><div class="shield-title">Hedge Betting Detection</div><div class="shield-desc">Flags coordinated opposite bets on same market, cross‑referencing external odds feeds.</div></div>
-      <div class="shield-card"><div class="shield-title">Arbitrage Mapping</div><div class="shield-desc">Real‑time identification of “arbers” by analyzing patterns against exchange fluctuations.</div></div>
-      <div class="shield-card"><div class="shield-title">Multi‑Accounting Graph Networks</div><div class="shield-desc">Links clusters by device fingerprint, IP proximity, payment method patterns (e.g., matching card digits).</div></div>
-      <div class="shield-card"><div class="shield-title">Velocity & AML Checks</div><div class="shield-desc">Flags high‑speed deposit/withdraw cycles, “wash betting” signatures. FATF VASP obligations covered.</div></div>
-      <div class="shield-card"><div class="shield-title">Session Rhythm Analysis</div><div class="shield-desc">Detects scripted consistency — fixed zero‑variance cadence (e.g., every 4.2s for 8h) instantly flagged.</div></div>
-    </div>
-    <p class="prose"><strong>The only platform scoring biological jitter + session rhythm + hedge mapping + AML in one engine.</strong></p>
-  </div>
+        <!-- THE PROBLEM Section (upgraded descriptions) -->
+        <section class="py-20 px-6 max-w-7xl mx-auto">
+            <div class="fade-up delay-100">
+                <div class="text-center mb-12">
+                    <div class="text-[11px] font-mono-custom text-green-400 tracking-[0.2em] mb-2">THE PROBLEM</div>
+                    <div class="text-3xl md:text-4xl font-headline font-bold text-primary">What's silently draining your revenue</div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-5">
+                    <div class="liquid-glass rounded-xl p-5 border-l-4 border-danger">
+                        <div class="flex items-center gap-3 mb-2"><div class="w-2.5 h-2.5 rounded-full threat-dot-red"></div><span class="font-bold text-danger text-base">Bots farming bonuses</span></div>
+                        <p class="text-sm text-on-surface-variant">Accounts that look human — but are built to extract bonuses at scale.</p>
+                    </div>
+                    <div class="liquid-glass rounded-xl p-5 border-l-4 border-danger">
+                        <div class="flex items-center gap-3 mb-2"><div class="w-2.5 h-2.5 rounded-full threat-dot-red"></div><span class="font-bold text-danger text-base">Wash-betting</span></div>
+                        <p class="text-sm text-on-surface-variant">Structured betting patterns designed to convert bonus value into guaranteed withdrawals.</p>
+                    </div>
+                    <div class="liquid-glass rounded-xl p-5 border-l-4 border-amber-500">
+                        <div class="flex items-center gap-3 mb-2"><div class="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-sm"></div><span class="font-bold text-amber-400 text-base">Fake affiliates</span></div>
+                        <p class="text-sm text-on-surface-variant">Traffic that inflates your numbers but quietly drains your bonuses and payouts.</p>
+                    </div>
+                    <div class="liquid-glass rounded-xl p-5 border-l-4 border-amber-500">
+                        <div class="flex items-center gap-3 mb-2"><div class="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-sm"></div><span class="font-bold text-amber-400 text-base">Syndicate accounts</span></div>
+                        <p class="text-sm text-on-surface-variant">Multiple identities controlled by the same entity — optimized to multiply bonus extraction.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-  <hr class="divider">
+        <!-- STATS ROW (updated first and last cards) -->
+        <section class="py-6 px-6 max-w-7xl mx-auto">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-5 fade-up delay-200">
+                <!-- first card: hidden loss uncovered -->
+                <div class="liquid-glass p-5 rounded-xl border-t border-primary-container/40">
+                    <p class="text-[10px] font-mono-custom text-green-400/70 uppercase tracking-wider">Hidden loss uncovered</p>
+                    <h3 class="text-3xl font-headline font-bold text-primary">15–35%</h3>
+                    <p class="text-[10px] text-green-400 font-mono-custom mt-1">OF BONUS / TRAFFIC VALUE</p>
+                    <div class="mt-2 h-1 bg-surface-container rounded-full"><div class="w-3/4 h-full bg-primary-container rounded-full"></div></div>
+                </div>
+                <div class="liquid-glass p-5 rounded-xl">
+                    <p class="text-[10px] font-mono-custom text-green-400/70 uppercase tracking-wider">Setup time</p>
+                    <h3 class="text-3xl font-headline font-bold text-primary">60 sec</h3>
+                    <p class="text-[10px] text-green-400 font-mono-custom mt-1">PASTE &amp; PROTECT</p>
+                </div>
+                <div class="liquid-glass p-5 rounded-xl">
+                    <p class="text-[10px] font-mono-custom text-green-400/70 uppercase tracking-wider">IT team needed</p>
+                    <h3 class="text-3xl font-headline font-bold text-primary">Zero</h3>
+                    <p class="text-[10px] text-green-400 font-mono-custom mt-1">NO INFRASTRUCTURE</p>
+                </div>
+                <!-- last card: typical recovery -->
+                <div class="liquid-glass p-5 rounded-xl border-r-2 border-primary-container/50">
+                    <p class="text-[10px] font-mono-custom text-green-400/70 uppercase tracking-wider">Typical recovery</p>
+                    <h3 class="text-3xl font-headline font-bold text-primary-container">$50K–$300K+</h3>
+                    <p class="text-[10px] text-primary-container font-mono-custom mt-1">MONTHLY</p>
+                </div>
+            </div>
+        </section>
 
-  <!-- 03 · Hierarchy of Truth (Modes) -->
-  <div class="section">
-    <div class="section-label">03 · Hierarchy of Truth</div>
-    <div class="section-title">Analytical modes — from heuristic to absolute</div>
-    <table class="mode-table">
-      <thead><tr><th>Mode</th><th>Equivalent Class</th><th>Primary Driver</th><th>Tactical Application</th></tr></thead>
-      <tbody>
-        <tr><td><strong>Gold</strong></td><td>Human</td><td>Manual / Heuristic</td><td>Baseline fallback. Manual upload of suspected logs for professional analysis.</td></tr>
-        <tr><td><strong>Titanium</strong></td><td>Superhuman</td><td>Aggregate Algorithm</td><td>Active Beta. Signal fusion (movement, timing, pings) to create synthetic identity detection.</td></tr>
-        <tr><td><strong>Vibranium</strong></td><td>God</td><td>Shadow Tag + Biometric</td><td>Absolute Truth. 1,000Hz skeletal micro‑tremor. Impossible to fake.</td></tr>
-      </tbody>
-     </table>
-  </div>
+        <!-- TELEGRAM COMMAND CENTER + HOW IT WORKS (sharpened subtext) -->
+        <section class="py-20 px-6 bg-surface-container/30">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-12 fade-up delay-100">
+                    <div class="text-[11px] font-mono-custom text-green-400 tracking-[0.2em]">TELEGRAM COMMAND CENTER</div>
+                    <div class="text-3xl md:text-4xl font-headline font-bold text-primary mt-1">Your Telegram becomes a command centre</div>
+                    <!-- updated subtext -->
+                    <p class="text-on-surface-variant text-base max-w-xl mx-auto mt-2">
+                        No dashboards. No delays. Every threat shows up instantly — where you already operate.
+                    </p>
+                </div>
 
-  <hr class="divider">
+                <div class="grid lg:grid-cols-2 gap-10 items-start">
+                    <!-- Left side: Telegram alert bubble -->
+                    <div class="fade-up delay-200">
+                        <div class="bg-surface-container-lowest rounded-2xl border border-primary-container/20 shadow-[0_0_30px_rgba(0,255,65,0.1)] overflow-hidden">
+                            <div class="bg-[#181d18] p-4 border-b border-green-400/20 flex gap-3 items-center">
+                                <div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center"><span class="material-symbols-outlined text-primary-container">smart_toy</span></div>
+                                <div><h4 class="font-headline font-bold text-primary">CasinoSense Bot</h4><p class="text-[9px] font-mono-custom text-green-400/70">REAL-TIME INTELLIGENCE</p></div>
+                            </div>
+                            <div class="p-5 space-y-3">
+                                <div class="bg-surface-container-high rounded-2xl rounded-tl-none p-4 border border-outline-variant/40">
+                                    <div class="flex items-center gap-2 mb-2"><span class="threat-dot-red w-2 h-2 rounded-full inline-block"></span><span class="font-bold text-danger text-sm">Bot detected</span></div>
+                                    <p class="text-sm text-on-surface-variant"><span class="font-mono-custom text-primary-container">Account #7741</span> — Mouse movement: perfect straight lines. Zero human variance. Registered 4 bonuses in 11 minutes.</p>
+                                </div>
+                                <div class="flex flex-wrap gap-3 pt-1">
+                                    <button class="bg-danger/20 text-danger border border-danger/40 px-5 py-2 rounded-md text-xs font-headline font-bold uppercase tracking-wider hover:bg-danger/40 transition">Ban account</button>
+                                    <button class="bg-amber-500/20 text-amber-400 border border-amber-500/40 px-5 py-2 rounded-md text-xs font-headline font-bold uppercase tracking-wider">Strip bonus</button>
+                                    <button class="bg-primary-container/20 text-primary-container border border-primary-container/40 px-5 py-2 rounded-md text-xs font-headline font-bold uppercase tracking-wider">Flag &amp; watch</button>
+                                </div>
+                                <p class="text-xs text-on-surface-variant font-mono-custom mt-3">⬆️ Tap one button → action applied instantly. No backoffice login.</p>
+                            </div>
+                        </div>
+                    </div>
 
-  <!-- 04 · GTM Phases -->
-  <div class="section">
-    <div class="section-label">04 · Go-to-Market Phases</div>
-    <div class="section-title">Three‑phase entry — prove first, sell second</div>
-    <div class="phase-grid">
-      <div class="phase-card p1">
-        <div class="phase-num">Phase 01</div>
-        <div class="phase-title">Prove the Number</div>
-        <div class="phase-range">Months 1 – 12</div>
-        <div class="phase-body">Deploy in Gold Mode on existing partner casinos (30+ Tier‑1 ASEAN operators already active). Collect performance fee on confirmed bot interception. Generate SHA‑256 forensic reports — every report becomes a sales asset.</div>
-        <div class="phase-target"><strong>Target:</strong> Existing ASEAN casinos, early adopters in PH/SG/TH.</div>
-      </div>
-      <div class="phase-card p2">
-        <div class="phase-num">Phase 02</div>
-        <div class="phase-title">Ride the Regulatory Wave</div>
-        <div class="phase-range">Months 12 – 24</div>
-        <div class="phase-body">Reframe as PAGCOR / FATF Travel Rule compliance product. Stricter KYC enforcement and real‑time selfie checks rolling out Q1 2026. Operators buy court‑ready forensic evidence.</div>
-        <div class="phase-target"><strong>Target:</strong> PAGCOR licensees, Philippine operators, emerging Thai/Vietnamese platforms.</div>
-      </div>
-      <div class="phase-card p3">
-        <div class="phase-num">Phase 03</div>
-        <div class="phase-title">Enter Tier‑1 via the Side Door</div>
-        <div class="phase-range">Months 24 – 36</div>
-        <div class="phase-body">Tier‑1 operators buy from established vendors. Path in: OEM partnership with iGaming platforms, payment gateways, or compliance stacks.</div>
-        <div class="phase-target"><strong>Target:</strong> Core gaming platforms, KYC vendors, payment processors as distribution partners.</div>
-      </div>
-    </div>
-  </div>
+                    <!-- Right side: upgraded how it works steps -->
+                    <div class="space-y-6 fade-up delay-300">
+                        <div class="flex gap-4 items-start">
+                            <div class="w-8 h-8 rounded-full bg-primary-container/20 text-primary-container flex items-center justify-center font-bold font-headline">1</div>
+                            <div><h4 class="font-bold text-primary text-lg">CasinoSense spots the threat</h4><p class="text-sm text-on-surface-variant">Identifies behaviour patterns no human player can consistently reproduce.</p></div>
+                        </div>
+                        <div class="flex gap-4 items-start">
+                            <div class="w-8 h-8 rounded-full bg-primary-container/20 text-primary-container flex items-center justify-center font-bold font-headline">2</div>
+                            <div><h4 class="font-bold text-primary text-lg">Alert fires to your Telegram</h4><p class="text-sm text-on-surface-variant">Immediate alert with full context — what triggered it and why it matters.</p></div>
+                        </div>
+                        <div class="flex gap-4 items-start">
+                            <div class="w-8 h-8 rounded-full bg-primary-container/20 text-primary-container flex items-center justify-center font-bold font-headline">3</div>
+                            <div><h4 class="font-bold text-primary text-lg">You tap one button</h4><p class="text-sm text-on-surface-variant">Take action instantly. No backoffice. No delay. No friction.</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-  <hr class="divider">
+        <!-- WHAT IT CATCHES (reframed as outcomes) -->
+        <section class="py-20 px-6 max-w-7xl mx-auto">
+            <div class="text-center mb-12 fade-up delay-100">
+                <div class="text-[11px] font-mono-custom text-green-400 tracking-[0.2em]">THREAT COVERAGE</div>
+                <div class="text-3xl md:text-4xl font-headline font-bold text-primary">Every major threat. Already built in.</div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 fade-up delay-200">
+                <div class="liquid-glass rounded-xl p-6 text-center border-t-2 border-primary-container/50 hover:scale-[1.02] transition-all">
+                    <div class="text-4xl mb-3">🤖</div><h4 class="font-bold text-primary text-lg">Bots</h4><p class="text-sm text-on-surface-variant">Accounts that behave like players but operate with machine-level consistency.</p>
+                </div>
+                <div class="liquid-glass rounded-xl p-6 text-center border-t-2 border-primary-container/50">
+                    <div class="text-4xl mb-3">♻️</div><h4 class="font-bold text-primary text-lg">Wash-betting</h4><p class="text-sm text-on-surface-variant">Patterns designed to turn bonus credit into guaranteed cash.</p>
+                </div>
+                <div class="liquid-glass rounded-xl p-6 text-center border-t-2 border-primary-container/50">
+                    <div class="text-4xl mb-3">👥</div><h4 class="font-bold text-primary text-lg">Syndicates</h4><p class="text-sm text-on-surface-variant">Hidden account networks controlled by a single entity.</p>
+                </div>
+                <div class="liquid-glass rounded-xl p-6 text-center border-t-2 border-primary-container/50">
+                    <div class="text-4xl mb-3">📊</div><h4 class="font-bold text-primary text-lg">Affiliates</h4><p class="text-sm text-on-surface-variant">Traffic sources that generate activity — but destroy profitability.</p>
+                </div>
+            </div>
+        </section>
 
-  <!-- 05 · Client Segments -->
-  <div class="section">
-    <div class="section-label">05 · Client Segments</div>
-    <div class="section-title">Sequenced by procurement velocity, not prestige</div>
-    <div class="table-wrapper">
-      <table class="client-table">
-        <thead><tr><th>Segment</th><th>Tier</th><th>Why they buy</th><th>Entry point</th></tr></thead>
-        <tbody>
-          <tr><td>ASEAN casinos (30+ deployed)</td><td><span class="tier-badge tier-now">Now</span></td><td>Live bot drain, bonus abuse — measurable, urgent</td><td>Bot Bounty Pilot — zero upfront</td></tr>
-          <tr><td>Philippine PAGCOR licensees</td><td><span class="tier-badge tier-now">Now</span></td><td>Meeting new KYC enforcement deadlines</td><td>Compliance Forensic Audit</td></tr>
-          <tr><td>Thai / Vietnamese platforms</td><td><span class="tier-badge tier-6">6 months</span></td><td>Preparing for first‑of‑kind gaming legislation</td><td>Silent Mode + compliance report</td></tr>
-          <tr><td>Payment processors (iGaming vertical)</td><td><span class="tier-badge tier-6">6 months</span></td><td>Chargeback fraud, card‑not‑present automation</td><td>Titanium real‑time scoring</td></tr>
-          <tr><td>Regional banks (AML for gaming)</td><td><span class="tier-badge tier-12">12 months</span></td><td>FATF Travel Rule enforcement for gaming‑related VASPs</td><td>Forensic Audit product</td></tr>
-          <tr><td>Tier‑1 operators (via partner)</td><td><span class="tier-badge tier-24">24–36 months</span></td><td>Enterprise fraud stack augmentation</td><td>OEM through existing platform vendor</td></tr>
-        </tbody>
-       </table>
-    </div>
-  </div>
+        <!-- DATA SECTION (add trust line) -->
+        <section class="py-12 px-6 max-w-7xl mx-auto">
+            <div class="liquid-glass rounded-2xl p-8 fade-up delay-100">
+                <div class="text-center mb-6"><div class="text-[11px] font-mono-custom text-green-400 tracking-[0.2em]">DATA SOVEREIGNTY</div><h3 class="text-2xl md:text-3xl font-headline font-bold text-primary mt-1">Your player data never leaves your system</h3>
+                <!-- added trust angle line -->
+                <p class="text-on-surface-variant mt-2">No external processing. No black-box decisions. Full control stays with you.</p>
+                </div>
+                <div class="divide-y divide-outline-variant/30">
+                    <div class="flex justify-between py-3 text-base"><span class="text-on-surface-variant">Player data sent to external servers</span><span class="text-danger font-bold flex items-center gap-1"><span class="material-symbols-outlined text-danger text-base">close</span> Never</span></div>
+                    <div class="flex justify-between py-3 text-base"><span class="text-on-surface-variant">Requires IT team or server setup</span><span class="text-danger font-bold flex items-center gap-1"><span class="material-symbols-outlined text-danger text-base">close</span> Never</span></div>
+                    <div class="flex justify-between py-3 text-base"><span class="text-on-surface-variant">Works from one line of code</span><span class="text-primary-container font-bold flex items-center gap-1"><span class="material-symbols-outlined text-primary-container">check_circle</span> Yes</span></div>
+                    <div class="flex justify-between py-3 text-base"><span class="text-on-surface-variant">Tamper-proof audit trail</span><span class="text-primary-container font-bold flex items-center gap-1"><span class="material-symbols-outlined text-primary-container">check_circle</span> Yes</span></div>
+                    <div class="flex justify-between py-3 text-base"><span class="text-on-surface-variant">ROI tracked automatically per threat</span><span class="text-primary-container font-bold flex items-center gap-1"><span class="material-symbols-outlined text-primary-container">check_circle</span> Yes</span></div>
+                </div>
+            </div>
+        </section>
 
-  <hr class="divider">
+        <!-- SETUP (one line script) -->
+        <section class="py-16 px-6 max-w-5xl mx-auto">
+            <div class="text-center fade-up delay-100">
+                <div class="text-[11px] font-mono-custom text-green-400 tracking-[0.2em]">INTEGRATION</div>
+                <h2 class="text-3xl md:text-4xl font-headline font-bold text-primary mt-1">Go live in 60 seconds</h2>
+                <p class="text-on-surface-variant mt-2">Paste this one line into your website. That's it.</p>
+            </div>
+            <div class="mt-8 bg-surface-container-lowest rounded-xl border border-primary-container/30 p-6 shadow-2xl fade-up delay-200">
+                <div class="flex gap-2 mb-4"><div class="w-3 h-3 rounded-full bg-danger/50"></div><div class="w-3 h-3 rounded-full bg-yellow-500/50"></div><div class="w-3 h-3 rounded-full bg-green-500/50"></div></div>
+                <pre class="font-mono-custom text-sm text-green-200 overflow-x-auto"><code class="text-zinc-300">&lt;script src="https://cdn.casinosense.ai/integrity.js" data-site-id="<span class="text-primary-container font-bold">YOUR_KEY</span>"&gt;&lt;/script&gt;</code></pre>
+                <p class="text-xs text-on-surface-variant mt-4 font-mono-custom">No IT team. No server. Connect your Telegram — instant protection.</p>
+            </div>
+        </section>
 
-  <!-- 06 · Pricing Architecture -->
-  <div class="section">
-    <div class="section-label">06 · Pricing Architecture</div>
-    <div class="section-title">Aligned to how iGaming operators actually buy</div>
-    <div class="pricing-grid">
-      <div class="price-card">
-        <div class="price-name">Bot Bounty Pilot</div>
-        <div class="price-amount">10–15%</div>
-        <div class="price-unit">of confirmed bot value intercepted (capped)</div>
-        <div class="price-desc">Zero upfront. Performance‑based. Removes procurement risk. Defines “confirmed” before deployment.</div>
-      </div>
-      <div class="price-card">
-        <div class="price-name">Transaction Scoring</div>
-        <div class="price-amount">$0.002–0.008</div>
-        <div class="price-unit">per scored bet, tiered by volume</div>
-        <div class="price-desc">Scales with operator growth. CasinoSense only earns when bets flow.</div>
-      </div>
-      <div class="price-card">
-        <div class="price-name">Forensic Audit Retainer</div>
-        <div class="price-amount">$5K–25K</div>
-        <div class="price-unit">per month</div>
-        <div class="price-desc">Sold to compliance/legal teams. SHA‑256 evidence lockers for PAGCOR reporting and FIU inquiries.</div>
-      </div>
-      <div class="price-card featured">
-        <div class="price-name">Bionium Enterprise License</div>
-        <div class="price-amount">$200K–800K</div>
-        <div class="price-unit">per year</div>
-        <div class="price-desc">Full Vibranium‑class biological verification. Priced against operator GGR. Phase 3 product.</div>
-      </div>
-    </div>
-  </div>
+        <!-- CTA final decisive version + final line -->
+        <section class="py-20 px-6 text-center relative overflow-hidden">
+            <div class="absolute inset-0 bg-primary-container/5 blur-[100px] rounded-full"></div>
+            <div class="relative z-10 max-w-3xl mx-auto fade-up delay-100">
+                <!-- final line above button -->
+                <p class="text-primary-container font-mono-custom text-xs mb-4">
+                    You’re not missing fraud. You’re underestimating how much of it is hidden.
+                </p>
+                <!-- updated headline and paragraph -->
+                <h3 class="text-3xl font-headline font-bold text-primary">
+                    See what your current system is missing
+                </h3>
+                <p class="text-on-surface-variant mt-4 mb-8">
+                    CasinoSense reveals hidden loss inside your existing traffic, bonuses, and player base — in real time.
+                </p>
+                <button class="px-8 py-4 bg-primary-container text-on-primary-container font-headline font-bold rounded-lg shadow-[0_0_30px_rgba(0,255,65,0.3)] hover:scale-105 transition-transform">INITIALIZE DEPLOYMENT</button>
+            </div>
+        </section>
+    </main>
 
-  <hr class="divider">
-
-  <!-- 07 · Competitive Position -->
-  <div class="section">
-    <div class="section-label">07 · Competitive Position</div>
-    <div class="section-title">Where incumbents stop and CasinoSense starts</div>
-    <div style="background:var(--ws-card);border:0.5px solid var(--ws-border);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin-bottom:1.5rem">
-      <div class="competitor-row"><div class="comp-name">BioCatch</div><div class="comp-lane">2,000+ behavioral parameters, cognitive patterns</div><div class="comp-gap"><span class="gap-dot"></span>No iGaming session logic or hedge detection</div></div>
-      <div class="competitor-row"><div class="comp-name">Sumsub</div><div class="comp-lane">Full‑spectrum iGaming fraud, 91–96% conversion</div><div class="comp-gap"><span class="gap-dot"></span>Identity at onboarding only — no continuous live‑table scoring</div></div>
-      <div class="competitor-row"><div class="comp-name">SEON</div><div class="comp-lane">900+ signals, AML compliance</div><div class="comp-gap"><span class="gap-dot"></span>No biological jitter or hedge mapping</div></div>
-      <div class="competitor-row"><div class="comp-name">Frogo</div><div class="comp-lane">AI‑powered scoring, real‑time alerts</div><div class="comp-gap"><span class="gap-dot"></span>Single‑engine without multi‑shield fusion</div></div>
-      <div class="competitor-row"><div class="comp-name">GeeTest</div><div class="comp-lane">Bot traffic blocking at login</div><div class="comp-gap"><span class="gap-dot"></span>No session‑level behavioral analysis</div></div>
-      <div class="competitor-row"><div class="comp-name">CasinoSense</div><div class="comp-lane">Biological + session + hedge + AML — single verdict</div><div class="comp-gap" style="color:var(--ws-gold)">The only fused iGaming adjudicator</div></div>
-    </div>
-    <p class="prose"><strong>Warning:</strong> Sumsub already emphasizes fraud after onboarding — bonus abuse, collusion, rings amplified by AI. That is precisely where CasinoSense lives. The competitive window is open but not indefinite.</p>
-  </div>
-
-  <hr class="divider">
-
-  <!-- 08 · Operational Flow & Sovereign Hive -->
-  <div class="section">
-    <div class="section-label">08 · Operational Flow & Hive Command</div>
-    <div class="section-title">From analysis to active interception</div>
-    <p class="prose"><strong>Service Model:</strong> Operators receive a unique API Key and quota via Node N Gateway. The Analysis Portal allows deep forensic review of gamelogs. The engine generates a side‑by‑side 3‑Brain Reasoning Table (Groq vs. Gemini) and issues a “Gold Standard” Forensic PDF.</p>
-    <p class="prose"><strong>Paid Version (Enterprise Shield):</strong> Real‑time Sentinel notifications the moment a bot is detected; batch uploads with automated Executive Summaries; the “Atomic Lock” — direct integration to freeze transactions or bet placements on Bionium‑level threats.</p>
-    <p class="prose"><strong>Sovereign Hive Command:</strong> Centralized dashboard on Beelink OG2 tracks global VRAM health, node persistence (VFS Watchdog), and the live “Humanity Score” of the entire alliance network. Every gamelog is archived in the FairSense DataVault, fueling the Sovereign AI Factory — the system gets smarter with every hand dealt.</p>
-  </div>
-
-  <hr class="divider">
-
-  <!-- 09 · The Durable Moat -->
-  <div class="section">
-    <div class="section-label">09 · The Durable Moat</div>
-    <div class="section-title">What compounds over time</div>
-    <div class="moat-row">
-      <div class="moat-cell-head"><div class="moat-label">Now (architecture)</div><div class="moat-val">Seven‑shield fusion verdict</div><div class="moat-note">Only platform scoring biological jitter + session rhythm + hedge mapping + AML in one engine</div></div>
-      <div class="moat-cell-head"><div class="moat-label">12 months (evidence)</div><div class="moat-val">Case library</div><div class="moat-note">Pilot results become court‑referenced forensic precedents in SEA — every PAGCOR report is a sales asset</div></div>
-      <div class="moat-cell-head"><div class="moat-label">36 months (data)</div><div class="moat-val">Cross‑domain corpus</div><div class="moat-note">Years of labeled hybrid attack patterns across 30+ ASEAN casinos. Unacquirable. Incumbents cannot replicate.</div></div>
-    </div>
-  </div>
-
-  <hr class="divider">
-
-  <!-- 10 · Pre-GTM Requirements -->
-  <div class="section">
-    <div class="section-label">10 · Pre‑GTM Requirements</div>
-    <div class="section-title">What must be true before the first serious sales conversation</div>
-    <div class="risk-grid">
-      <div class="risk-card"><div class="risk-title">Benchmark report</div><div class="risk-body">Every technical buyer will run CasinoSense against a labeled dataset — known bots vs. humans. Publish accuracy metrics and confidence intervals before enterprise demos.</div></div>
-      <div class="risk-card"><div class="risk-title">Legal definition of “confirmed bot”</div><div class="risk-body">Bot Bounty model lives or dies on this definition. Write it into every pilot contract. Define adjudication process.</div></div>
-      <div class="risk-card"><div class="risk-title">PAGCOR / regional compliance posture</div><div class="risk-body">Behavioral biometrics generates sensitive data. Philippine, Thai, Vietnamese operators need clear DPA, data residency, retention policy as new gaming laws take effect.</div></div>
-      <div class="risk-card"><div class="risk-title">Language audit on all materials</div><div class="risk-body">Replace marketing superlatives with tested accuracy metrics and confidence intervals. The capability is strong — it doesn’t need amplification.</div></div>
-    </div>
-  </div>
-
-  <div class="footer-bar">
-    <span>CasinoSense · Sovereign iGaming Defense Grid</span>
-    <span>Gary · April 2026</span>
-  </div>
-
-</div>
+    <footer class="bg-[#101410] w-full border-t border-green-900/20 py-10 px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+        <div class="flex flex-col gap-1"><span class="text-green-400 font-bold font-headline text-lg tracking-tighter">CASINOSENSE</span><p class="font-mono-custom text-[9px] tracking-tighter text-zinc-500 uppercase">© 2025 BEHAVIORAL AI // BOT_DETECTION_v3.2</p></div>
+        <div class="flex gap-8 flex-wrap justify-center"><a class="font-mono-custom text-[10px] text-zinc-500 hover:text-green-400" href="#">TELEGRAM_BOT</a><a class="font-mono-custom text-[10px] text-zinc-500 hover:text-green-400" href="#">THREAT_INTEL</a><a class="font-mono-custom text-[10px] text-zinc-500 hover:text-green-400" href="#">PRIVACY_FIRST</a><a class="font-mono-custom text-[10px] text-zinc-500 hover:text-green-400" href="#">API_DOCS</a></div>
+        <div class="flex gap-3"><span class="material-symbols-outlined text-zinc-500 text-sm">verified</span><span class="material-symbols-outlined text-zinc-500 text-sm">bolt</span></div>
+    </footer>
 </body>
 </html>
-```
